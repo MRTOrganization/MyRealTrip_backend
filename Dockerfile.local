@@ -1,0 +1,4 @@
+FROM                myrealtrip:base
+MAINTAINER          pchpch0070@gmail.com
+
+COPY                .   /srv/project
