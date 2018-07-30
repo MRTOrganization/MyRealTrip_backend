@@ -1,4 +1,11 @@
 FROM                myrealtrip:base
 MAINTAINER          pchpch0070@gmail.com
 
-COPY                .   /srv/project
+ENV             BUILD_MODE               local
+ENV             DJANGO_SETTINGS_MODULE  config.settings.${BUILD_MODE}
+
+
+COPY            .   /srv/project
+
+WORKDIR         /srv/project/app
+CMD             python manage.py runserver 0:8000
