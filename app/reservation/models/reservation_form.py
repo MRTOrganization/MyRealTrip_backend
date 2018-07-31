@@ -1,6 +1,7 @@
 from django.db import models
-from products.models import TicketInfo, GuideTourInfo, ActivityInfo
+
 from hotels.models import KoreanHotel
+from products.models.productinfo import TicketInfo, GuideTourInfo, ActivityInfo
 
 
 class ReservationBase(models.Model):
@@ -15,7 +16,7 @@ class ReservationBase(models.Model):
 class TicketReservation(ReservationBase):
     ticket = models.ManyToManyField(
         TicketInfo,
-        related_name=''
+        related_name='ticket_reservation'
     )
     email = models.EmailField()
     email2 = models.EmailField()
@@ -24,7 +25,7 @@ class TicketReservation(ReservationBase):
 class GuideTourReservation(ReservationBase):
     guide = models.ManyToManyField(
         GuideTourInfo,
-        related_name=''
+        related_name='guide_reservation'
     )
 
 
@@ -36,7 +37,7 @@ class KoreanHotelReservation(ReservationBase):
     )
     korean_hotel = models.ManyToManyField(
         KoreanHotel,
-        related_name=''
+        related_name='korean_hotel_reservation'
     )
     english_first_name = models.CharField(max_length=10)
     english_last_name = models.CharField(max_length=10)
@@ -49,5 +50,5 @@ class KoreanHotelReservation(ReservationBase):
 class ActivityReservation(ReservationBase):
     activity = models.ManyToManyField(
         ActivityInfo,
-        related_name=''
+        related_name='activity_reservation'
     )

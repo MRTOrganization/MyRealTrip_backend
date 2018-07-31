@@ -16,7 +16,7 @@ class ProductBase(models.Model):
 class TicketInfo(ProductBase):
     region = models.ManyToManyField(
         City,
-        related_name='',
+        related_name='city_ticket',
     )
 
 
@@ -24,14 +24,14 @@ class GuideTourInfo(ProductBase):
     name = models.CharField(max_length=5)
     region = models.ManyToManyField(
         City,
-        related_name='',
+        related_name='city_guide',
     )
 
 
 class ActivityInfo(ProductBase):
     region = models.ManyToManyField(
         City,
-        related_name='',
+        related_name='city_activity',
     )
 
 

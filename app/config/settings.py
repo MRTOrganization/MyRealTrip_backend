@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL = 'members.User'
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'flights',
     'region',
     'hotels',
+    'wishlist',
+    'reservation',
 
     'django.contrib.admin',
     'django.contrib.auth',
