@@ -5,14 +5,12 @@ name = "pypi"
 
 [packages]
 django = "*"
-<<<<<<< HEAD
 pillow = "*"
-=======
 uwsgi = "*"
 "boto3" = "*"
 "psycopg2-binary" = "*"
 django-storages = "*"
->>>>>>> 9122417d387610c4c7cfad8421f1d92986bbb812
+
 
 [dev-packages]
 awsebcli = "*"

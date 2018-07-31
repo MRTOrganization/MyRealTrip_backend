@@ -14,7 +14,7 @@ class KoreanHotel(models.Model):
         on_delete=models.CASCADE,
     )
     date = models.DateTimeField(auto_now_add=True)
-    cotent = models.TextField()
+    content = models.TextField()
     # like = models.ForeignKey
 
 
