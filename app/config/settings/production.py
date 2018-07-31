@@ -1,9 +1,22 @@
+import sys
+
 from .base import *
 
 secrets = json.load(open(os.path.join(SECRETS_DIR, 'production.json')))
 
+RUNSERVER = sys.argv[1] == 'runserver'
 DEBUG = False
 ALLOWED_HOSTS = secrets['ALLOWED_HOSTS']
+if RUNSERVER:
+    ALLOWED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+    ]
+
+if not RUNSERVER:
+    ALLOWED_HOSTS = secrets['ALLOWED_HOSTS']
+
+
 WSGI_APPLICATION = 'config.wsgi.production.application'
 
 # DB
