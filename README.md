@@ -15,6 +15,25 @@
 }
 ```
 
+#### `.secrets/dev.json`
+
+- PostgreSQL을 사용, DATABASES섹션의 설정 필요
+
+```json
+{
+  "DATABASE": {
+    "default": {
+      "ENGINE" : "django.db.backend.postgresql",
+      "HOST" : "<host>",
+      "PORT" : 5432,
+      "USER" : "<user>",
+      "PASSWORD": "<password>",
+      "NAME": "<db name>"
+    }
+  }
+}
+```
+
 ## Installation
 
 ```
