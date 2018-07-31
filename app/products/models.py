@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.db import models
+from region.models import City
 
 
-class TicketInfo(models.Model):
+class ProductBase(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField(blank=True)
     date = models.IntegerField()
@@ -12,8 +13,26 @@ class TicketInfo(models.Model):
         abstract = True
 
 
-class GuideTourInfo(TicketInfo):
+class TicketInfo(ProductBase):
+    region = models.ManyToManyField(
+        City,
+        related_name='',
+    )
+
+
+class GuideTourInfo(ProductBase):
     name = models.CharField(max_length=5)
+    region = models.ManyToManyField(
+        City,
+        related_name='',
+    )
+
+
+class ActivityInfo(ProductBase):
+    region = models.ManyToManyField(
+        City,
+        related_name='',
+    )
 
 
 class Comment(models.Model):
