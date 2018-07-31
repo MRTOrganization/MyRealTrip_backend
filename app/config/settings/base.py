@@ -9,26 +9,30 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
+import json
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_DIR = os.path.dirname(BASE_DIR)
+SECRETS_DIR = os.path.join(ROOT_DIR, '.secrets')
+secrets = json.load(open(os.path.join(SECRETS_DIR, 'base.json')))
+
+SECRET_KEY = secrets['SECRET_KEY']
+print(SECRET_KEY)
+
+# Static
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
+
+# AWS
+AWS_ACCESS_KEY_ID = secrets['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = secrets['AWS_SECRET_ACCESS_KEY']
+AWS_DEFAULT_ACL = secrets['AWS_DEFAULT_ACL']
+AWS_S3_REGION_NAME = secrets['AWS_S3_REGION_NAME']
+AWS_S3_SIGNATURE_VERSION = secrets['AWS_S3_SIGNATURE_VERSION']
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$7(77)6-z1v+20i#i^pus7#4utt9+%g^=_-ya=uo^$px4(6kum'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'members',
@@ -73,18 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 
 # Password validation
@@ -120,7 +113,3 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-STATIC_URL = '/static/'
