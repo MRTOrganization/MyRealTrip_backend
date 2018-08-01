@@ -42,7 +42,6 @@ AUTH_USER_MODEL = 'members.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-
 ]
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
@@ -50,7 +49,13 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_AUTHENTICATED_LOGOUT_REDIRECTS = True
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pchpch0070@gmail.com'
+EMAIL_HOST_PASSWORD = secrets['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = True
 
 INSTALLED_APPS = [
     'members',
@@ -115,9 +120,6 @@ TEMPLATES = [
     },
 ]
 
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -136,7 +138,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -149,5 +150,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
