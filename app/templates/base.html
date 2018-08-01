@@ -6,29 +6,33 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
 </head>
 <body>
 <nav class="navbar navbar-expand navbar-light bg-light">
-		<div class="container">
-			<a href="{% url 'index' %}" class="navbar-brand">My <span class="text-info">real</span> trip</a>
-			<div class="">
-				<ul class="navbar-nav ml-auto">
-					{% if user.is_authenticated %}
-					<li class="nav-item">
-						<a class="nav-link" href="">Logout</a>
-					</li>
-					{% else %}
-					<li class="nav-item">
-						<a class="nav-link" href="">Login</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="">Signup</a>
-					</li>
-					{% endif %}
-				</ul>
-			</div>
-		</div>
-	</nav>
+    <div class="container">
+        <a href="{% url 'index' %}" class="navbar-brand">My <span class="text-info">real</span> trip</a>
+        <div class="">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <p class="nav-link"><a href="{% url 'members:mypage' %}">{{ user }}</a>님 환영합니다.</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'members:logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'members:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'members:signup' %}">Signup</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
 
 {% block content %}
 {% endblock %}
