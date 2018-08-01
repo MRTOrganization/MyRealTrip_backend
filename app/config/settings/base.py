@@ -76,6 +76,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.naver',
+
+    'rest_framework',
+
 ]
 
 SITE_ID = 1
