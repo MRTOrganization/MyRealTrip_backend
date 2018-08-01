@@ -3,10 +3,6 @@ from django.db import models
 from region.models import City
 
 
-class Hotel(models.Model):
-    pass
-
-
 class KoreanHotel(models.Model):
     title = models.CharField(max_length=50)
     region = models.ForeignKey(

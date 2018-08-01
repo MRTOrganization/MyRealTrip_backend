@@ -62,29 +62,42 @@ class Comment(models.Model):
         return f'{self.author.username}님의 댓글(후기)'
 
 
-class TicketPriceInfo(models.Model):
+class PriceInfoBase(models.Model):
+    date = models.IntegerField()
+    price = models.CharField(max_length=100, blank=True)
+
+
+class TicketPriceInfo(PriceInfoBase):
     ticket = models.ForeignKey(
         TicketInfo,
         on_delete=models.CASCADE,
         null=True,
         related_name='ticket_price',
     )
-    date = models.IntegerField()
-    price = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f'{self.ticket}의 가격 : {self.price}'
 
 
-class GuidePriceInfo(models.Model):
+class GuidePriceInfo(PriceInfoBase):
     guide = models.ForeignKey(
         GuideTourInfo,
         on_delete=models.CASCADE,
         null=True,
         related_name='guide_price',
     )
-    date = models.IntegerField()
-    price = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f'{self.guide}의 가격 : {self.price}'
+
+
+class ActivityPriceInfo(PriceInfoBase):
+    activity = models.ForeignKey(
+        ActivityInfo,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='guide_price',
+    )
+
+    def __str__(self):
+        return f'{self.activity}의 가격 : {self.price}'
