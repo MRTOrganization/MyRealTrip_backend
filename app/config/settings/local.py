@@ -3,8 +3,10 @@ from .base import *
 DEBUG = True
 ALLOWED_HOSTS = []
 
+# WSGI
 WSGI_APPLICATION = 'config.wsgi.local.application'
 
+# DB
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -12,9 +14,17 @@ DATABASES = {
     }
 }
 
+# Graph model
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
+
+# Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 
+# Log
 LOG_DIR = '/var/log/django'
 if not os.path.exists(LOG_DIR):
     LOG_DIR = os.path.join(ROOT_DIR, '.log')
