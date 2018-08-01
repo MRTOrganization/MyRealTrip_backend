@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from hotels.models import KoreanHotel, KoreanHotelPriceInfo
+
+admin.site.register(KoreanHotel)
+admin.site.register(KoreanHotelPriceInfo)

@@ -6,12 +6,19 @@ name = "pypi"
 [packages]
 django = "*"
 
+
+pillow = "*"
+
+
 pillow = "*"
 
 uwsgi = "*"
 "boto3" = "*"
 "psycopg2-binary" = "*"
 django-storages = "*"
+
+
+django-extensions = "*"
 
 
 [dev-packages]
