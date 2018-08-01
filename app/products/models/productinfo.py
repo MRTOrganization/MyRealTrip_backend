@@ -88,3 +88,16 @@ class GuidePriceInfo(models.Model):
 
     def __str__(self):
         return f'{self.guide}의 가격 : {self.price}'
+
+class ActivityPriceInfo(models.Model):
+    activity = models.ForeignKey(
+        ActivityInfo,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='activity_price',
+    )
+    date = models.IntegerField()
+    price = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return f'{self.activity}의 가격 : {self.price}'

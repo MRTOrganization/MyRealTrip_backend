@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-expand navbar-light bg-light">
 		<div class="container">
-			<a href="{% url 'index' %}" class="navbar-brand">your <span class="text-info">real</span> trip</a>
+			<a href="{% url 'index' %}" class="navbar-brand">My <span class="text-info">real</span> trip</a>
 			<div class="">
 				<ul class="navbar-nav ml-auto">
 					{% if user.is_authenticated %}
@@ -25,10 +25,12 @@
 						<a class="nav-link" href="">Signup</a>
 					</li>
 					{% endif %}
-					<li class="nav-item"></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+
+{% block content %}
+{% endblock %}
 </body>
 </html>
