@@ -10,7 +10,7 @@ uwsgi = "*"
 "boto3" = "*"
 "psycopg2-binary" = "*"
 django-storages = "*"
-pygraphviz = "*"
+django-extensions = "*"
 
 [dev-packages]
 awsebcli = "*"
