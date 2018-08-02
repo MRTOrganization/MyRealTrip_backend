@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-class KoreaHotelList:
+class KoreanHotelList:
     def __init__(self, city, country):
         self.city = city
         self.country = country
@@ -46,13 +46,4 @@ class KoreanHotelDetail:
         self.city_name = city_name
         self.comments = comments
         self.price = price
-
-
-
-
-
-roma = KoreaHotelList('Roma', 'Italy')
-roma.search_koreanhotel()
-madrid = KoreaHotelList('Madrid', 'Spain')
-madrid.search_koreanhotel()
 
