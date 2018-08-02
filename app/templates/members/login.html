@@ -10,8 +10,20 @@
             <input type="password" name="password">
             <button type="submit" class="btn btn-info">로그인</button>
         </form>
+    </div>
 
-        <h2><a href="{% provider_login_url 'facebook' method='oauth2' %}">페이스북 로그인</a></h2>
+    <div class="btn-wrap">
+        <a class="btn-new btn--type-outline btn--width-100 btn-sns" href="{% provider_login_url 'facebook' method='oauth2' %}">
+    <img class="icon" src="https://d2yoing0loi5gh.cloudfront.net/assets/kitty/setting/fb-logo@2x-2a65bc6ab97a894a1baeca5b714f4201eb991cfc6d955ef657f86de8e56f89d5.png" width="18">
+    <span>페이스북으로 로그인</span>
+        </a>
+    </div>
+
+    <div class="btn-wrap">
+        <a class="btn-new btn--type-outline btn--width-100 btn-sns" href="{% provider_login_url 'naver' method='oauth2' %}">
+    <img class="icon" src="https://d2yoing0loi5gh.cloudfront.net/assets/kitty/setting/naver-logo@2x-332865f7b796a02822378e0b61e6dcace93ae9a24abd810cd774a06b5fbcb0b5.png" width="18">
+    <span>네이버로 로그인</span>
+    </a>
     </div>
 
 {% endblock %}
