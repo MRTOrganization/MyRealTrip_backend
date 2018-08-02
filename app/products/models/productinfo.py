@@ -66,6 +66,9 @@ class PriceInfoBase(models.Model):
     date = models.IntegerField()
     price = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        abstract = True
+
 
 class TicketPriceInfo(PriceInfoBase):
     ticket = models.ForeignKey(
@@ -89,6 +92,7 @@ class GuidePriceInfo(PriceInfoBase):
 
     def __str__(self):
         return f'{self.guide}의 가격 : {self.price}'
+
 
 class ActivityPriceInfo(PriceInfoBase):
     activity = models.ForeignKey(
