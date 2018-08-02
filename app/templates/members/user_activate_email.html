@@ -1,0 +1,6 @@
+{% autoescape off %}
+{{ user.username }}님 반갑습니다.
+다음 주소를 클릭하여 이메일을 인증해 주세요
+http://localhost:8000{% url 'members:activate' uidb64=uid token=token %}
+{% endautoescape %}
+

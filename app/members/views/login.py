@@ -1,5 +1,4 @@
-from django.contrib.auth import authenticate
-from django.contrib.auth.views import login
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 
 __all__ = (
@@ -15,7 +14,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             # next = request.GET['next']
             #
             # if next:
