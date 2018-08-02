@@ -4,13 +4,17 @@ from region.models import City
 
 
 class KoreanHotel(models.Model):
-    title = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     region = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
     )
+    thumbnail = models.ImageField('koreanhotel')
+    comments = models.CharField(max_length=50)
+    price = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
+
     # like = models.ForeignKey
 
 

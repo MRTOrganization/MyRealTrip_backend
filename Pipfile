@@ -13,10 +13,12 @@ django-storages = "*"
 djangorestframework = "*"
 django-allauth = "*"
 django-extensions = "*"
+requests = "*"
+"beautifulsoup4" = "*"
+lxml = "*"
 
 [dev-packages]
 awsebcli = "*"
-
 
 [requires]
 python_version = "3.6"
