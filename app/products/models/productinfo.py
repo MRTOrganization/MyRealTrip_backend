@@ -90,6 +90,7 @@ class GuidePriceInfo(PriceInfoBase):
     def __str__(self):
         return f'{self.guide}의 가격 : {self.price}'
 
+
 class ActivityPriceInfo(PriceInfoBase):
     activity = models.ForeignKey(
         ActivityInfo,
