@@ -1,5 +1,5 @@
-from django.contrib.auth import get_user_model
-from django.contrib.auth.views import login
+from django.contrib.auth import get_user_model, login
+# from django.contrib.auth.views import login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_text
@@ -12,6 +12,7 @@ __all__ = (
 )
 
 User = get_user_model()
+
 
 def activate(request, uidb64, token):
     try:

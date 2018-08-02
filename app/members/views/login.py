@@ -1,5 +1,5 @@
-from django.contrib.auth import authenticate
-from django.contrib.auth.views import login
+from django.contrib.auth import authenticate, login
+# from django.contrib.auth.views import login
 from django.shortcuts import redirect, render
 
 __all__ = (

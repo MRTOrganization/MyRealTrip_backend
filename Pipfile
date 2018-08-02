@@ -13,10 +13,10 @@ django-storages = "*"
 djangorestframework = "*"
 django-allauth = "*"
 django-extensions = "*"
+django-rest-framework = "*"
 
 [dev-packages]
 awsebcli = "*"
-
 
 [requires]
 python_version = "3.6"

@@ -16,6 +16,7 @@ __all__ = (
 
 User = get_user_model()
 
+
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -28,12 +29,12 @@ def signup(request):
             message = render_to_string('members/user_activate_email.html', {
                 'user': user,
                 'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                'token':account_activation_token.make_token(user),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token': account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
-                        mail_subject, message, to=[to_email]
+                mail_subject, message, to=[to_email]
             )
             email.send()
             return render(request, 'members/signup_done.html')
