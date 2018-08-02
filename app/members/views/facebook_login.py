@@ -11,7 +11,7 @@ __all__ = (
 def facebook_login(request):
 
     code = request.GET.get('code')
-    user = authenticate(request, code=code)
+    user = authenticate(request, code=code, backend='django.contrib.auth.backends.ModelBackend')
 
     if user is not None:
         login(request, user)

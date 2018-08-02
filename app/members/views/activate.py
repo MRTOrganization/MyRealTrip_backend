@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model, login
-# from django.contrib.auth.views import login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_text
@@ -14,7 +13,7 @@ __all__ = (
 User = get_user_model()
 
 
-def activate(request, uidb64, token):
+def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -23,7 +22,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
-        return render(request, 'members/user_active_complete.html')
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        return redirect('index')
     else:
         return HttpResponse('Activation link is invalid!')
