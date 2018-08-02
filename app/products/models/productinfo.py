@@ -66,6 +66,9 @@ class PriceInfoBase(models.Model):
     date = models.IntegerField()
     price = models.CharField(max_length=100, blank=True)
 
+    class Meta:
+        abstract = True
+
 
 class TicketPriceInfo(PriceInfoBase):
     ticket = models.ForeignKey(
