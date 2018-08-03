@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for koreanhotel in koreanhotels_list %}
+    <p>{{ koreanhotel.name }}</p>
+    <img src="{{ koreanhotel.thumbnail }}" alt="">
+    <p>{{ koreanhotel.comments }}</p>
+    <p>{{ koreanhotel.price }}</p>
+{% endfor %}
+
+
+{% endblock %}

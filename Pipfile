@@ -14,7 +14,13 @@ djangorestframework = "*"
 django-allauth = "*"
 django-extensions = "*"
 django-rest-framework = "*"
+
 pygments = "*"
+
+requests = "*"
+"beautifulsoup4" = "*"
+lxml = "*"
+
 
 [dev-packages]
 awsebcli = "*"
