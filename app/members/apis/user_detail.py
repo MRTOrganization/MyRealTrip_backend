@@ -6,9 +6,6 @@ from members.serializer import UserSerializer
 
 User = get_user_model()
 
-
-class UserList(generics.ListAPIView):
+class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
