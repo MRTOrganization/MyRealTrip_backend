@@ -14,5 +14,3 @@ class UserList(APIView):
 class UserDetail(APIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
