@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for country in countries %}
+        <h3>{{ country }}</h3>
+        {% for city in country.city_set.all %}
+            <p><a href="{% url 'koreanhotel-list' country=country.name city=city.name %}">{{ city }}</a></p>
+        {% endfor %}
+
+    {% endfor %}
+    <hr>
+{% endblock %}
