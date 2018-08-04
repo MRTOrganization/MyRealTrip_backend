@@ -13,7 +13,7 @@ __all__ = (
 User = get_user_model()
 
 
-def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
+def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -22,7 +22,6 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        return redirect('index')
+        return render(request, 'members/user_active_complete.html')
     else:
         return HttpResponse('Activation link is invalid!')
