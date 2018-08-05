@@ -8,6 +8,7 @@ def city_list(request):
     context = {
         'countries': countries,
     }
+    print(countries)
     return render(request, 'products/cities_list.html', context)
 
 
