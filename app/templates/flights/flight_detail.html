@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for flight_detail in flight_details %}
+        <p>
+        {{ flight_detail.depart_date }}
+        {{ flight_info.origin }} - {{ flight_info.destination }}
+    </p>
+
+    <p>{{ flight_detail.go_airline }}</p>
+    <p>{{ flight_detail.go_dep_time }}</p>
+    <p>{{ flight_detail.go_flytime }}</p>
+    <p>{{ flight_detail.go_arr_time }}</p>
+    <p>{{ flight_detail.go_arr_airport }}</p>
+
+    <p>{{ flight_detail.return_date }}
+        {{ flight_info.destination }} - {{ flight_info.origin }}
+    </p>
+    <p>{{ flight_detail.return_airline }} {{ flight_detail.return_dep_time }}</p>
+    <p>{{ flight_detail.return_dep_airport }}</p>
+    <p>{{ flight_detail.return_flytime }}</p>
+    <p>{{ flight_detail.return_arr_time }}</p>
+    <p>{{ flight_detail.return_arr_airport }}</p>
+    <p>{{ flight_detail.price }}</p>
+    {% endfor %}
+
+
+
+
+{% endblock %}

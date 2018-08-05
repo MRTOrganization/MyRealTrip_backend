@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for flight in flights %}
+        <a href="{% url 'flight-detail' flight.pk %}">{{ flight }}</a>
+    {% endfor %}
+{% endblock %}
