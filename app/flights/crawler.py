@@ -39,19 +39,20 @@ class Flight:
         destination_k = parse.quote(destination_k)
 
         driver = webdriver.Chrome('./chromedriver')
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(15)
 
         # url
         url = f'http://flights.myrealtrip.com/air/b2c/AIR/INT/AIRINTSCH0100100010.k1?initform=RT&domintgubun=I&depctycd={origin}&depctycd={destination}&depctycd=&depctycd=&depctynm={origin_k}&depctynm={destination_k}&depctynm=&depctynm=&arrctycd={destination}&arrctycd={origin}&arrctycd=&arrctycd=&arrctynm={destination_k}&arrctynm={origin_k}&arrctynm=&arrctynm=&depdt={depart_date}&depdt={return_date}&depdt=&depdt=&opencase=N&opencase=N&opencase=N&openday=&openday=&openday=&depdomintgbn=I&tasktype=B2C&servicecacheyn=Y&adtcount=1&chdcount=0&infcount=0&cabinclass=Y&cabinsepflag=Y&preferaircd=&secrchType=FARE&maxprice=&availcount=250&KSESID=air%3Ab2c%3ASELK138RB%3ASELK138RB%3A%3A00'
         driver.get(url)
 
         flight_info_list = list()
-        flight_info_dict = dict()
+
 
         # role속성이 resultLi인 리스트 결과를 가져옴
         result_list = driver.find_elements_by_css_selector("li[role='resultLi']")
 
         for result in result_list:
+            flight_info_dict = dict()
             list_class = result.find_elements_by_css_selector('div.list')
             # flight_info_dict에 키와 값을 넣음
             # 출발편
@@ -83,6 +84,8 @@ class Flight:
             flight_info_dict["price"] = result.find_element_by_css_selector('span#bottomClose').text
             # flight_info_dict를 flight_info_list의 원소로 삽입
             flight_info_list.append(flight_info_dict)
+        print('crwaling result')
+        print(flight_info_list)
         return flight_info_list
 
 
@@ -104,6 +107,6 @@ class FlightInfo:
         self.return_flytime = return_flytime
         self.price = price
 
-
+#
 # icn2osa = Flight('인천', '오사카','2018-08-24', '2018-08-30')
 # icn2osa.search_flight()

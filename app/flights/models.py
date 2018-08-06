@@ -26,7 +26,9 @@ class FlightInfo(models.Model):
     def get_flight_info(self):
         # get_flight_list의 결과를 를 다시 받아서 상세정보를 얻음
         flight_list = self.get_flight_list()
+
         for flight in flight_list:
+
             # FlightInfoDetail 객체 생성
             FlightInfoDetail.objects.create(
                 flight=self,
@@ -72,3 +74,5 @@ class FlightInfoDetail(models.Model):
     # 가격
     price = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ['price']

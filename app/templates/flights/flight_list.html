@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+
+    <form action="" method="POST">
+    {% csrf_token %}
+        <div class="container">
+            <label for="">출발지<input type="text" name="origin"></label>
+            <label for="">행선지<input type="text" name="destination"></label>
+            <label for="">출국일<input type="text" name="depart_date"></label>
+            <label for="">귀국일<input type="text" name="return_date"></label>
+            <button class="btn btn-primary">검색</button>
+        </div>
+    <p>최근 검색 기록</p>
     {% for flight in flights %}
-        <a href="{% url 'flight-detail' flight.pk %}">{{ flight }}</a>
+        <p><a href="{% url 'flight-detail' flight.pk %}">{{ flight }}</a></p>
     {% endfor %}
+    </form>
 {% endblock %}
