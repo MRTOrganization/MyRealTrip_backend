@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from flights.models import FlightInfo, FlightInfoDetail
+from flights.models import FlightInfo
 
 
 def flight_list(request):
