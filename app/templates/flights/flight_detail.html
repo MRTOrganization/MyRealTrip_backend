@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for flight_detail in flight_details %}
+        <div class="container">
+            <div class="text-center">
+                {{ flight_detail.depart_date }}<br>
+                {{ flight_info.origin }}<--->{{ flight_info.destination }}</div>
+
+
+            <table class="table table-borderless">
+                <tbody>
+                <tr>
+                    <td rowspan="2">{{ flight_detail.go_airline }}</td>
+                    <td>{{ flight_detail.go_dep_time }}</td>
+                    <td>-------></td>
+                    <td>{{ flight_detail.go_arr_time }}</td>
+                    <td rowspan="4">{{ flight_detail.price }}</td>
+                </tr>
+                <tr>
+                    <td>{{ flight_detail.go_arr_airport }}</td>
+                    <td>{{ flight_detail.go_flytime }}</td>
+                    <td>{{ flight_detail.go_dep_airport }}</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">{{ flight_detail.return_airline }}</td>
+                    <td>{{ flight_detail.return_dep_time }}</td>
+                    <td>------></td>
+                    <td>{{ flight_detail.return_arr_time }}</td>
+                </tr>
+                <tr>
+                    <td>{{ flight_detail.return_dep_airport }}</td>
+                    <td>{{ flight_detail.return_flytime }}</td>
+                    <td>{{ flight_detail.return_arr_airport }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+
+
+
+
+{% endblock %}

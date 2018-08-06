@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from flights.models import FlightInfo, FlightPriceInfo
+from flights.models import FlightInfo, FlightInfoDetail
 
 admin.site.register(FlightInfo)
-admin.site.register(FlightPriceInfo
-                    )
+admin.site.register(FlightInfoDetail)
