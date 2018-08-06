@@ -3,14 +3,9 @@ from django.shortcuts import render
 from region.models import Country
 
 
-def city_list(request):
-    countries = Country.objects.all()
-    context = {
-        'countries': countries,
-    }
-    print(countries)
-    return render(request, 'products/cities_list.html', context)
+def product_list(request):
+    pass
 
 
-def ticket_list(request, city, country):
-    print(country, city)
+def product_detail(request, pk):
+    pass

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class TicketList:
+class ProductList:
     def __init__(self, city, country, thumbnail, itype, title, review, price, category, meta_info):
         self.city = city
         self.country = country
@@ -15,7 +15,7 @@ class TicketList:
         self.category = category
         self.meta_info = meta_info
 
-    def ticket_list(self):
+    def product_list(self):
         params = {
             'city': self.city,
             'country': self.country,
@@ -49,7 +49,7 @@ class TicketList:
             meta_info = item.select_one('div.meta-infos').get_text(strip=True)
             print(meta_info)
 
-            new_ticket_list = TicketList(
+            new_ticket_list = ProductList(
                 city=self.city,
                 country=self.country,
                 thumbnail=self.thumbnail,
@@ -64,7 +64,7 @@ class TicketList:
             self.ticket_list.append(new_ticket_list)
 
 
-class TicketDetail:
+class ProductDetail:
     def __init__(self, title, region, review, guide_image, guide_name, info_description):
         self.title = title
         self.region = region
@@ -73,7 +73,7 @@ class TicketDetail:
         self.guide_name = guide_name
         self.info_description = info_description
 
-    def ticket_detail(self):
+    def product_detail(self):
         response = requests.get('https://www.myrealtrip.com/offers/21886')
         # print(response.text)
         soup = BeautifulSoup(response.text, 'lxml')
