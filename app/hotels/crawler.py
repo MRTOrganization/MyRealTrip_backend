@@ -9,7 +9,7 @@ class KoreanHotelList:
 
 
     def search_koreanhotel(self):
-        params = {'city': self.city, 'country': self.country }
+        params = {'city': self.city, 'country': self.country}
         response = requests.get('https://www.myrealtrip.com/accommodations/lodgings?', params)
         soup = BeautifulSoup(response.text, 'lxml')
 
