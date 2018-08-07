@@ -1,16 +1,10 @@
 from django.db import models
 
 from region.models import City, Country
-from hotels import crawler
-
-__all__ = (
-    'KoreanHotelInfo',
-    'KoreanHotel',
-    'KoreanHotelPriceInfo',
-)
+from accommodations import crawlers
 
 
-class KoreanHotelInfo(models.Model):
+class PopularHotelInfo(models.Model):
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
@@ -20,17 +14,17 @@ class KoreanHotelInfo(models.Model):
         on_delete=models.CASCADE,
     )
 
-    def get_koreanhotel_list(self):
-        koreanhotel_list = crawler.KoreanHotelList(
+    def get_popularhotel_list(self):
+        popularhotel_list = crawlers.PopularHotelList(
             city=self.city,
             country=self.country
         )
-        koreanhotel_list.search_koreanhotel()
-        result = koreanhotel_list.koreanhotel_list
+        popularhotel_list.search_popularhotel()
+        result = popularhotel_list.popularhotel_list
         return result
 
 
-class KoreanHotel(models.Model):
+class PopularHotel(models.Model):
     name = models.CharField(max_length=50, blank=True)
     city = models.ForeignKey(
         City,
@@ -40,7 +34,7 @@ class KoreanHotel(models.Model):
         Country,
         on_delete=models.CASCADE
     )
-    thumbnail = models.ImageField(upload_to='koreanhotel', blank=True)
+    thumbnail = models.ImageField(upload_to='popularhotel', blank=True)
     comments = models.CharField(max_length=50, blank=True)
     price = models.CharField(max_length=50, blank=True)
     date = models.DateTimeField(auto_now_add=True)
@@ -49,9 +43,9 @@ class KoreanHotel(models.Model):
     # like = models.ForeignKey
 
 
-class KoreanHotelPriceInfo(models.Model):
-    korean_hotel = models.ForeignKey(
-        KoreanHotel,
+class PopularHotelPriceInfo(models.Model):
+    popular_hotel = models.ForeignKey(
+        PopularHotel,
         on_delete=models.CASCADE,
         null=True,
     )
@@ -59,4 +53,4 @@ class KoreanHotelPriceInfo(models.Model):
     price = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f'{self.korean_hotel}의 가격 : {self.price}'
+        return f'{self.popular_hotel}의 가격 : {self.price}'
