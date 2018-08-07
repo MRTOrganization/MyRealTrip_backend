@@ -19,7 +19,7 @@ def koreanhotel_list(request, country, city):
     koreanhotels = KoreanHotelInfo.objects.create(country=icountry, city=icity)
     koreanhotels_list = koreanhotels.get_koreanhotel_list()
     context = {
-        'koreanhotels_list':koreanhotels_list,
+        'koreanhotels_list': koreanhotels_list,
     }
     print(koreanhotels_list)
     return render(request, 'hotels/koreanhotels.html', context)

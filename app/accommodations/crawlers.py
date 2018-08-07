@@ -18,8 +18,8 @@ class PopularHotelList:
         for item in item_list:
             thumbnail = re.findall('\((\S*)\)', item.select_one('div.img-container > div.image').get('style'))[0]
             hotel_name = item.select_one('div.name').get_text(strip=True)
-            grade = item.select_one('div.hotel-review-score').get_text(strip=True)
-            comments = item.select_one('div.hotel-review-count').get_text(strip=True)
+            # grade = item.select_one('div.hotel-review-score').get_text(strip=True)
+            # comments = item.select_one('div.hotel-review-count').get_text(strip=True)
             if item.select_one('div.hotel-price-text'):
                 price = item.select_one('div.hotel-price-text').get_text(strip=True)
             else:
@@ -30,19 +30,19 @@ class PopularHotelList:
                 country=self.country,
                 thumbnail=thumbnail,
                 hotel_name=hotel_name,
-                grade=grade,
-                comments=comments,
+                # grade=grade,
+                # comments=comments,
                 price=price,
             )
             self.popularhotel_list.append(new_popularhotel)
 
 
 class PopularHotelDetail:
-    def __init__(self, city, country, thumbnail, hotel_name, grade, comments, price):
+    def __init__(self, city, country, thumbnail, hotel_name, price):
         self.city = city
         self.country = country
         self.thumbnail = thumbnail
         self.hotel_name = hotel_name
-        self.grade = grade
-        self.comments = comments
+        # self.grade = grade
+        # self.comments = comments
         self.price = price
