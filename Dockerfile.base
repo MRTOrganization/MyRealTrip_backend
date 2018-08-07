@@ -8,4 +8,3 @@ RUN             apt -y install nginx supervisor
 
 COPY            ./requirements.txt  /srv/
 RUN             pip install -r /srv/requirements.txt
-
