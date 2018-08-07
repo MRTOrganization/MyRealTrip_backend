@@ -1,3 +1,11 @@
 from django.shortcuts import render
 
-# Create your views here.
+from region.models import Country
+
+
+def product_list(request):
+    pass
+
+
+def product_detail(request, pk):
+    pass
