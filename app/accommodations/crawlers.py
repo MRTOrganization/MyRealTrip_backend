@@ -46,3 +46,36 @@ class PopularHotelDetail:
         # self.grade = grade
         # self.comments = comments
         self.price = price
+
+
+class PopularCityList:
+    def __init__(self, city, country):
+        self.city = city
+        self.country = country
+        self.popularcity_list = list()
+
+    def search_popularcity(self):
+        params = {'city': self.city, 'country': self.country}
+        response = requests.get('https://www.myrealtrip.com/hotels?', params)
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        city_list = soup.select('a.outlink-button-container')
+        for city in city_list:
+            city_name = city.select_one('div.text').get_text(strip=True)
+            popular_booking = city.get('href')
+
+            new_popularcity = PopularCityDetail(
+                city=self.city,
+                country=self.country,
+                city_name=city_name,
+                popular_booking=popular_booking
+            )
+            self.popularcity_list.append(new_popularcity)
+
+
+class PopularCityDetail:
+    def __init__(self, city, country, city_name, popular_booking):
+        self.city = city
+        self.country = country
+        self.city_name = city_name,
+        self.popular_booking = popular_booking

@@ -23,3 +23,7 @@ def popularhotel_list(request, country, city):
     }
     print(popularhotels_list)
     return render(request, 'accommodations/popularhotels.html', context)
+
+
+def city_list(request):
+    pass
