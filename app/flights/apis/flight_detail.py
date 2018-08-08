@@ -1,13 +1,10 @@
-from django.contrib.auth import get_user_model
 from django.http import Http404
-from rest_framework import generics, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from flights.models import FlightInfoDetail, FlightInfo
-from flights.serializer import FlightDetailSerializer, FlightSerializer
-from members.serializer import UserSerializer
-
+from flights.models import FlightInfo
+from flights.serializer import FlightDetailSerializer
 
 
 class FlightDetail(APIView):
