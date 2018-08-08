@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from flights.models import FlightInfo
-from flights.serializer import FlightSerializer
+from flights.serializer import FlightSerializer, FlightDetailSerializer
 
 
 class FlightList(APIView):
@@ -16,5 +16,8 @@ class FlightList(APIView):
         serializer = FlightSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            new_flight = FlightInfo.objects.latest('pk')
+            new_flight.get_flight_url()
+            detail_serializer = FlightDetailSerializer(new_flight.flightinfodetail_set.first())
+            return Response(detail_serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
