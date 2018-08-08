@@ -82,7 +82,7 @@ class FlightInfoDetail(models.Model):
         on_delete=models.CASCADE,
         null=True,
     )
-    url = models.CharField(max_length=200, blank=True)
+    url = models.CharField(max_length=800, blank=True)
 
 #     # 출발편
 #     go_airline = models.CharField(max_length=50)
