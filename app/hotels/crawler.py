@@ -1,15 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 class KoreanHotelList:
     def __init__(self, city, country):
         self.city = city
         self.country = country
         self.koreanhotel_list = list()
 
-
     def search_koreanhotel(self):
-        params = {'city': self.city, 'country': self.country }
+        params = {'city': self.city, 'country': self.country}
         response = requests.get('https://www.myrealtrip.com/accommodations/lodgings?', params)
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -36,7 +36,6 @@ class KoreanHotelList:
             self.koreanhotel_list.append(new_koreanhotel)
 
 
-
 class KoreanHotelDetail:
     def __init__(self, city, country, thumbnail, name, city_name, comments, price):
         self.city = city
@@ -46,4 +45,3 @@ class KoreanHotelDetail:
         self.city_name = city_name
         self.comments = comments
         self.price = price
-

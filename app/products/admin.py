@@ -1,12 +1,18 @@
 from django.contrib import admin
 
-from products.models.productinfo import TicketInfo, GuideTourInfo, ActivityInfo, Comment, TicketPriceInfo, \
-    GuidePriceInfo, ActivityPriceInfo
+from products.models.productinfo import \
+    ProductTicketList, ProductGuideTourList, \
+    ProductActivityList, Comment, \
+    ProductTicketDetail, ProductGuideTourDetail, \
+    ProductActivityDetail
 
-admin.site.register(TicketInfo)
-admin.site.register(GuideTourInfo)
-admin.site.register(ActivityInfo)
+admin.site.register(ProductTicketList)
+admin.site.register(ProductGuideTourList)
+admin.site.register(ProductActivityList)
 admin.site.register(Comment)
-admin.site.register(TicketPriceInfo)
-admin.site.register(GuidePriceInfo)
-admin.site.register(ActivityPriceInfo)
+admin.site.register(ProductTicketDetail)
+admin.site.register(ProductGuideTourDetail)
+admin.site.register(ProductActivityDetail)
+# admin.site.register(TicketPriceInfo)
+# admin.site.register(GuidePriceInfo)
+# admin.site.register(ActivityPriceInfo)

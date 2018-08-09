@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'flights',
     'region',
     'hotels',
+    'accommodations',
     'wishlist',
     'reservation',
 

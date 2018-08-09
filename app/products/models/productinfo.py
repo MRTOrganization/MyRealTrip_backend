@@ -3,50 +3,92 @@ from django.db import models
 from region.models import City
 
 
-class ProductBase(models.Model):
-    title = models.CharField(max_length=30)
-    content = models.TextField(blank=True)
-    date = models.IntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
+class ProductListBase(models.Model):
+    tour_name = models.CharField(max_length=15)
+    title = models.CharField(max_length=100)
+    review = models.CharField(max_length=20)
+    price = models.CharField(max_length=20)
+    category = models.CharField(max_length=30)
 
     class Meta:
         abstract = True
 
 
-class TicketInfo(ProductBase):
+class ProductTicketList(ProductListBase):
+    pass
+
+
+class ProductGuideTourList(ProductListBase):
+    meta_info = models.CharField(max_length=20)
+
+
+class ProductActivityList(ProductListBase):
+    meta_info = models.CharField(max_length=20)
+
+
+class ProductDetailBase(models.Model):
+    title = models.CharField(max_length=100)
+    review_number = models.CharField(max_length=15, blank=True)
+    product_type_icon = models.ImageField(upload_to='icon', blank=True)
+    product_type_text = models.CharField(max_length=50, blank=True)
+    date = models.IntegerField()
+    photo_review = models.ImageField(upload_to='review', blank=True)
+    text_review = models.TextField(blank=True)
+    guide_name = models.CharField(max_length=20)
+    guide_description = models.TextField()
+    necessary_guide = models.TextField(blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class ProductTicketDetail(ProductDetailBase):
     region = models.ManyToManyField(
         City,
         related_name='city_ticket',
     )
+    select_option = models.CharField(max_length=30)
+    info_photo = models.ImageField(upload_to='information', blank=True)
+    information = models.TextField()
 
 
-class GuideTourInfo(ProductBase):
-    name = models.CharField(max_length=5)
+class ProductGuideTourDetail(ProductDetailBase):
     region = models.ManyToManyField(
         City,
         related_name='city_guide',
     )
+    tour_terms = models.TextField()
+    course_image = models.ImageField(upload_to='course_image', blank=True)
+    course_text = models.TextField(blank=True)
 
 
-class ActivityInfo(ProductBase):
+class ProductActivityDetail(ProductDetailBase):
     region = models.ManyToManyField(
         City,
         related_name='city_activity',
     )
+    course_image = models.ImageField(upload_to='course_image', blank=True)
+    course_text = models.TextField(blank=True)
 
 
 class Comment(models.Model):
     ticket = models.ForeignKey(
-        TicketInfo,
+        ProductTicketDetail,
         on_delete=models.CASCADE,
         null=True,
         related_name='comments_by_tickets',
     )
     guide = models.ForeignKey(
-        GuideTourInfo,
+        ProductGuideTourDetail,
         on_delete=models.CASCADE,
         null=True,
         related_name='comments_by_guide_tour',
+    )
+    activity = models.ForeignKey(
+        ProductActivityDetail,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='comments_by_activity',
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -70,37 +112,37 @@ class PriceInfoBase(models.Model):
         abstract = True
 
 
-class TicketPriceInfo(PriceInfoBase):
-    ticket = models.ForeignKey(
-        TicketInfo,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='ticket_price',
-    )
-
-    def __str__(self):
-        return f'{self.ticket}의 가격 : {self.price}'
-
-
-class GuidePriceInfo(PriceInfoBase):
-    guide = models.ForeignKey(
-        GuideTourInfo,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='guide_price',
-    )
-
-    def __str__(self):
-        return f'{self.guide}의 가격 : {self.price}'
-
-
-class ActivityPriceInfo(PriceInfoBase):
-    activity = models.ForeignKey(
-        ActivityInfo,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='activity_price',
-    )
-
-    def __str__(self):
-        return f'{self.activity}의 가격 : {self.price}'
+# class TicketPriceInfo(PriceInfoBase):
+#     ticket = models.ForeignKey(
+#         TicketInfo,
+#         on_delete=models.CASCADE,
+#         null=True,
+#         related_name='ticket_price',
+#     )
+#
+#     def __str__(self):
+#         return f'{self.ticket}의 가격 : {self.price}'
+#
+#
+# class GuidePriceInfo(PriceInfoBase):
+#     guide = models.ForeignKey(
+#         GuideTourInfo,
+#         on_delete=models.CASCADE,
+#         null=True,
+#         related_name='guide_price',
+#     )
+#
+#     def __str__(self):
+#         return f'{self.guide}의 가격 : {self.price}'
+#
+#
+# class ActivityPriceInfo(PriceInfoBase):
+#     activity = models.ForeignKey(
+#         ActivityInfo,
+#         on_delete=models.CASCADE,
+#         null=True,
+#         related_name='activity_price',
+#     )
+#
+#     def __str__(self):
+#         return f'{self.activity}의 가격 : {self.price}'

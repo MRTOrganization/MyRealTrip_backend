@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for popularhotel in popularhotels_list %}
+    <p>{{ popularhotel.hotel_name }}</p>
+    <img src="{{ popularhotel.thumbnail }}" alt="">
+    <p>{{ popularhotel.grade }}</p>
+    <p>{{ popularhotel.comments }}</p>
+    <p>{{ popularhotel.price }}</p>
+{% endfor %}
+{% for popularcity in popularcity_list %}
+        <a href="{{ popularcity.popular_booking }}">{{ popularcity.city_name }}</a>
+{% endfor %}
+{% endblock %}

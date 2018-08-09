@@ -7,9 +7,10 @@ from region.models import Country, City
 def city_list(request):
     countries = Country.objects.all()
     context = {
-        'countries':countries,
+        'countries': countries,
     }
     return render(request, 'hotels/cities_list.html', context)
+
 
 def koreanhotel_list(request, country, city):
     print(country, city)
@@ -18,7 +19,9 @@ def koreanhotel_list(request, country, city):
     koreanhotels = KoreanHotelInfo.objects.create(country=icountry, city=icity)
     koreanhotels_list = koreanhotels.get_koreanhotel_list()
     context = {
-        'koreanhotels_list':koreanhotels_list,
+        'koreanhotels_list': koreanhotels_list,
     }
     print(koreanhotels_list)
     return render(request, 'hotels/koreanhotels.html', context)
+
+
