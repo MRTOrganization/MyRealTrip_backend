@@ -2,6 +2,33 @@ import requests
 from bs4 import BeautifulSoup
 
 
+class PopularCityList:
+    def __init__(self, popular_image, popular_city_name):
+        self.popular_image = popular_image
+        self.popular_city_name = popular_city_name
+
+    def get_popular_city_list(self):
+        response = requests.get('https://www.myrealtrip.com/experiences')
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        populars = soup.select(
+            '.popular_cities__container > .swiper-container > .swiper-wrapper > .swiper-slide > a.popular_cities__item')
+
+        city_list = list()
+
+        for popular in populars:
+            popular_image = popular.select_one('.popular_cities__item_top').get('style')
+            popular_city_name = popular.select_one(
+                '.popular_cities__item_bottom > span.popular_cities__item__name').get_text(strip=True)
+
+            new_city_list = PopularCityList(
+                popular_image=self.popular_image,
+                popular_city_name=self.popular_city_name
+            )
+            city_list.append(new_city_list)
+        return city_list
+
+
 class ProductList:
     def __init__(self, city, country, thumbnail, tour_name, title, review, price, category, meta_info):
         self.city = city
