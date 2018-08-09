@@ -3,17 +3,17 @@ from bs4 import BeautifulSoup
 
 
 class ProductList:
-    def __init__(self, city, country, thumbnail, itype, title, review, price, category, meta_info):
+    def __init__(self, city, country, thumbnail, tour_name, title, review, price, category, meta_info):
         self.city = city
         self.country = country
-        self.ticket_list = list()
         self.thumbnail = thumbnail
-        self.itype = itype
+        self.tour_name = tour_name
         self.title = title
         self.review = review
         self.price = price
         self.category = category
         self.meta_info = meta_info
+        self.ticket_list = list()
 
     def get_product_list(self):
         params = {
@@ -32,8 +32,8 @@ class ProductList:
             thumbnail = pre_thumbnail.get('data-echo')
             print(thumbnail)
 
-            itype = item.select_one('div.profile-name').get_text(strip=True)
-            print(itype)
+            tour_name = item.select_one('div.profile-name').get_text(strip=True)
+            print(tour_name)
             title = item.select_one('div.name').get_text(strip=True)
             print(title)
             review = item.select_one('div.review > div.text').get_text(strip=True)
@@ -53,7 +53,7 @@ class ProductList:
                 city=self.city,
                 country=self.country,
                 thumbnail=self.thumbnail,
-                itype=self.itype,
+                tour_name=self.tour_name,
                 title=self.title,
                 review=self.review,
                 price=self.price,
@@ -76,7 +76,7 @@ class ProductDetail:
 
     def get_product_detail(self):
         params = {
-            self.no,
+            'no': self.no,
         }
         response = requests.get('https://www.myrealtrip.com/offers/', params)
         # print(response.text)
@@ -94,21 +94,21 @@ class ProductDetail:
             print(review)
 
         # 아이콘 크롤
-        icon_container_list = soup.select('div.info-icon-container')
-        # print(icon_container_list)
-        # for container2 in icon_container_list:
+        icon_container = soup.select('.info-icon-container > .icon-item')
+        # print(icon_container)
+        for icon in icon_container:
+            icon_image = icon.select_one('img.icon').get('src')
+            print(icon_image)
+            icon_small_text = icon.select_one('.text-sm').get_text(strip=True)
+            print(icon_small_text)
+            icon_bold_text = icon.select_one('.text').get_text(strip=True)
+            print(icon_bold_text)
 
-        #     product_type_img = container2.select_one('div.icon-item > img.icon').get('src')
-        #     print(product_type_img)
-        #     product_type_text_sm = container2.select_one('div.icon-item > div.text-sm').get_text(strip=True)
-        #     print(product_type_text_sm)
-        #     product_type_text_bold = container2.select_one('div.icon-item > div.text').get_text(strip=True)
-        #     print(product_type_text_bold)
-
-        #     meet_time_img = container2.select_one('div.icon-item > img.icon').get('src')
-        #     print(meet_time_img)
-        #     meet_time_text_sm = container2.select_one('div.text-sm').get_text(strip=True)
-        #     print(meet_time_text_sm)
+        # 투어 참가 가능 연령 크롤링
+        sidebar_notice_title = soup.select_one('.sidebar-inner-box > .notice-title').get_text(strip=True)
+        print(sidebar_notice_title)
+        sidebar_notice_desc = soup.select_one('.sidebar-inner-box > .notice-desc').get_text(strip=True)
+        print(sidebar_notice_desc)
 
         # 가이드 정보 크롤링
         guide_name_div = soup.select_one('div.guide-name')
@@ -212,3 +212,63 @@ class ProductDetail:
             print(content)
 
 
+class ProductCategoriesList:
+    def __init__(self, city, country, categories,
+                 thumbnail, tour_name, title, review, price, category, meta_info):
+        self.city = city
+        self.country = country
+        self.categories = categories
+        self.country = country
+        self.thumbnail = thumbnail
+        self.tour_name = tour_name
+        self.title = title
+        self.review = review
+        self.price = price
+        self.category = category
+        self.meta_info = meta_info
+        self.category_list = list()
+
+    def get_product_categories_list(self):
+        params = {
+            'city': self.city,
+            'country': self.country,
+            'group_category': 'experience',
+            'categories%5B%5D': self.categories,
+            'order': 'popular',
+        }
+
+        response = requests.get('https://www.myrealtrip.com/offers?', params)
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        lists = soup.select('.list-wrapper > ul.item-container > li.item > .card-cover')
+
+        for category_list in lists:
+            thumbnail = category_list.select_one('.img-container > .img-placeholder > img.img').get('data-echo')
+            print(thumbnail)
+            tour_name = category_list.select_one('.content-box > .guide-container > .profile-name').get_text(strip=True)
+            print(tour_name)
+            title = category_list.select_one('.content-box > .name').get_text(strip=True)
+            print(title)
+            review = category_list.select_one('.content-box > .review > .text').get_text(strip=True)
+            print(review)
+            price = category_list.select_one('.content-box > .price').get_text(strip=True)
+            print(price)
+            category = category_list.select_one('.content-box > .info-container > .category').get_text(strip=True)
+            print(category)
+            meta_info = category_list.select_one('.content-box > .info-container > .meta-infos').get_text(strip=True)
+            print(meta_info)
+
+            new_category_list = ProductCategoriesList(
+                city=self.city,
+                country=self.country,
+                categories=self.categories,
+                thumbnail=self.thumbnail,
+                tour_name=self.tour_name,
+                title=self.title,
+                review=self.review,
+                price=self.price,
+                category=self.category,
+                meta_info=self.meta_info,
+            )
+            self.category_list.append(new_category_list)
+            return category_list
