@@ -13,7 +13,7 @@ class ProductList:
         self.price = price
         self.category = category
         self.meta_info = meta_info
-        self.ticket_list = list()
+        self.product_list = list()
 
     def get_product_list(self):
         params = {
@@ -49,7 +49,7 @@ class ProductList:
             meta_info = item.select_one('div.meta-infos').get_text(strip=True)
             print(meta_info)
 
-            new_ticket_list = ProductList(
+            new_product_list = ProductList(
                 city=self.city,
                 country=self.country,
                 thumbnail=self.thumbnail,
@@ -61,7 +61,7 @@ class ProductList:
                 meta_info=self.meta_info
             )
 
-            self.ticket_list.append(new_ticket_list)
+            self.product_list.append(new_product_list)
 
 
 class ProductDetail:

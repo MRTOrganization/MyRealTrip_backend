@@ -1,29 +1,42 @@
 from django.conf import settings
 from django.db import models
-from region.models import City
+
+from products import crawler
+from region.models import City, Country
 
 
 class ProductListBase(models.Model):
+    city = models.ForeignKey(
+        City,
+        on_delete=models.CASCADE,
+    )
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.CASCADE,
+    )
     tour_name = models.CharField(max_length=15)
+    thumbnail = models.ImageField(upload_to='product_thumbnail', blank=True)
     title = models.CharField(max_length=100)
     review = models.CharField(max_length=20)
     price = models.CharField(max_length=20)
     category = models.CharField(max_length=30)
+    meta_info = models.CharField(max_length=20, blank=True)
 
-    class Meta:
-        abstract = True
-
-
-class ProductTicketList(ProductListBase):
-    pass
-
-
-class ProductGuideTourList(ProductListBase):
-    meta_info = models.CharField(max_length=20)
-
-
-class ProductActivityList(ProductListBase):
-    meta_info = models.CharField(max_length=20)
+    def get_product_list_crawler(self):
+        product_list = crawler.ProductList(
+            city=self.city,
+            country=self.country,
+            tour_name=self.tour_name,
+            thumbnail=self.thumbnail,
+            title=self.title,
+            review=self.review,
+            price=self.price,
+            category=self.category,
+            meta_info=self.meta_info
+        )
+        product_list.get_product_list()
+        result = product_list.get_product_list
+        return result
 
 
 class ProductDetailBase(models.Model):
