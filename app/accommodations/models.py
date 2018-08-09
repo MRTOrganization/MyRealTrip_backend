@@ -23,6 +23,15 @@ class PopularHotelInfo(models.Model):
         result = popularhotel_list.popularhotel_list
         return result
 
+    def get_popularcity_list(self):
+        popularcity_list = crawlers.PopularHotelList(
+            city=self.city,
+            country=self.country,
+        )
+        popularcity_list.search_popularhotel()
+        result1 = popularcity_list.popularcity_list
+        return result1
+
 
 class PopularHotel(models.Model):
     name = models.CharField(max_length=50, blank=True)

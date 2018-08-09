@@ -18,12 +18,10 @@ def popularhotel_list(request, country, city):
     pcity = City.objects.filter(name=city)[0]
     popularhotels = PopularHotelInfo.objects.create(country=pcountry, city=pcity)
     popularhotels_list = popularhotels.get_popularhotel_list()
+    popularcity_list = popularhotels.get_popularcity_list()
     context = {
         'popularhotels_list': popularhotels_list,
+        'popularcity_list': popularcity_list,
     }
     print(popularhotels_list)
     return render(request, 'accommodations/popularhotels.html', context)
-
-
-def city_list(request):
-    pass

@@ -3,12 +3,6 @@ from django.db import models
 from region.models import City, Country
 from hotels import crawler
 
-__all__ = (
-    'KoreanHotelInfo',
-    'KoreanHotel',
-    'KoreanHotelPriceInfo',
-)
-
 
 class KoreanHotelInfo(models.Model):
     city = models.ForeignKey(

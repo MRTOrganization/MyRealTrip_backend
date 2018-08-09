@@ -1,11 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-__all__ = (
-    'KoreanHotelList',
-    'KoreanHotelDetail',
-)
-
 
 class KoreanHotelList:
     def __init__(self, city, country):
