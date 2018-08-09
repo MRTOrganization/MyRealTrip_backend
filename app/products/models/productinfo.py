@@ -5,7 +5,7 @@ from products import crawler
 from region.models import City, Country
 
 
-class ProductListBase(models.Model):
+class ProductList(models.Model):
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
