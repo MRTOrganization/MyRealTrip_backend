@@ -35,7 +35,7 @@ class ProductList(models.Model):
             meta_info=self.meta_info
         )
         product_list.get_product_list()
-        result = product_list.get_product_list
+        result = product_list.product_list
         return result
 
 

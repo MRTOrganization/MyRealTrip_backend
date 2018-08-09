@@ -14,7 +14,7 @@ class PopularCityList(models.Model):
             popular_city_name=self.popular_city_name
         )
         popular_city_list.get_popular_city_list()
-        result = popular_city_list.get_popular_city_list()
+        result = popular_city_list.city_list
         return result
 
 

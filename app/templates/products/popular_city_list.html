@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for popular_city in popular_cities %}
+        <h3>{{ popular_city }}</h3>
+    {% endfor %}
+
+{% endblock %}
