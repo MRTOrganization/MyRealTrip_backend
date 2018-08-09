@@ -39,23 +39,19 @@ class Flight:
         # 한글 url 파싱
         origin_k = parse.quote(origin_k)
         destination_k = parse.quote(destination_k)
-
-
-
-
         chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--dump-dom")
+        # chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--no-sandbox")
+        # chrome_options.add_argument("--dump-dom")
 
         # runserver
-        # dirs = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'chromedriver_mac')
+        dirs = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'chromedriver')
         # dirs = webdriver.Chrome(executable_path=dirs, chrome_options=chrome_options)
         # deploy
         # dirs = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'chromedriver_linux')
         # driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver')
-
-        driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver', chrome_options=chrome_options)
+        print(dirs)
+        driver = webdriver.Chrome(executable_path=dirs, chrome_options=chrome_options)
         driver.implicitly_wait(15)
         # url
         url = f'http://flights.myrealtrip.com/air/b2c/AIR/INT/AIRINTSCH0100100010.k1?initform=RT&domintgubun=I&depctycd={origin}&depctycd={destination}&depctycd=&depctycd=&depctynm={origin_k}&depctynm={destination_k}&depctynm=&depctynm=&arrctycd={destination}&arrctycd={origin}&arrctycd=&arrctycd=&arrctynm={destination_k}&arrctynm={origin_k}&arrctynm=&arrctynm=&depdt={depart_date}&depdt={return_date}&depdt=&depdt=&opencase=N&opencase=N&opencase=N&openday=&openday=&openday=&depdomintgbn=I&tasktype=B2C&servicecacheyn=Y&adtcount=1&chdcount=0&infcount=0&cabinclass=Y&cabinsepflag=Y&preferaircd=&secrchType=FARE&maxprice=&availcount=250&KSESID=air%3Ab2c%3ASELK138RB%3ASELK138RB%3A%3A00'
