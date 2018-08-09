@@ -19,8 +19,14 @@ class PopularHotelList:
         for item in item_list:
             thumbnail = re.findall('\((\S*)\)', item.select_one('div.img-container > div.image').get('style'))[0]
             hotel_name = item.select_one('div.name').get_text(strip=True)
-            grade = item.select_one('div.hotel-review-score').get_text(strip=True)
-            comments = item.select_one('div.hotel-review-count').get_text(strip=True)
+            if item.select_one('div.hotel-review-score'):
+                grade = item.select_one('div.hotel-review-score').get_text(strip=True)
+            else:
+                grade = '평가 정보가 없어요'
+            if item.select_one('div.hotel-review-count'):
+                comments = item.select_one('div.hotel-review-count').get_text(strip=True)
+            else:
+                comments = '평가 정보가 없어요'
             if item.select_one('div.hotel-price-text'):
                 price = item.select_one('div.hotel-price-text').get_text(strip=True)
             else:
