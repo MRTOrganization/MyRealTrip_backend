@@ -29,7 +29,6 @@ class GetPopularCityList:
             self.city_list.append(new_city_list)
 
 
-
 class ProductList:
     def __init__(self, city, country, thumbnail, tour_name, title, review, price, category, meta_info):
         self.city = city
@@ -43,7 +42,7 @@ class ProductList:
         self.meta_info = meta_info
 
 
-class Product:
+class GetProduct:
     def __init__(self, city, country):
         self.city = city
         self.country = country
@@ -92,16 +91,28 @@ class Product:
 
 
 class ProductDetail:
-    def __init__(self, no, title, region, review, guide_image, guide_name, info_description):
+    def __init__(self, title, region, review_number,
+                 product_type_icon, product_type_text_sm, product_type_text_bold,
+                 guide_image, guide_name, guide_description):
         self.title = title
         self.region = region
-        self.review = review
+        self.review_number = review_number
+        self.product_type_icon = product_type_icon
+        self.product_type_text_sm = product_type_text_sm
+        self.product_type_text_bold = product_type_text_bold
         self.guide_image = guide_image
         self.guide_name = guide_name
-        self.info_description = info_description
-        self.no = no
+        self.guide_description = guide_description
 
-    def get_product_detail(self):
+
+class GetProductDetail:
+    def __init__(self, city, country, no):
+        self.city = city
+        self.country = country
+        self.no = no
+        self.product_detail_list = list()
+
+    def get_product_detail_base(self):
         params = {
             'no': self.no,
         }
@@ -114,17 +125,16 @@ class ProductDetail:
 
         for container in title_container_list:
             title = container.select_one('div.offer-title').get_text(strip=True)
-            region_info = container.select_one('div.inner-container ')
-            #     print(region_info)
-            review = container.select_one('div.score-container > span.text-gray').get_text(strip=True)
+            region = container.select_one('div.inner-container ')  # 다시 해와야함
+            review_number = container.select_one('div.score-container > span.text-gray').get_text(strip=True)
 
         # 아이콘 크롤
         icon_container = soup.select('.info-icon-container > .icon-item')
         # print(icon_container)
         for icon in icon_container:
-            icon_image = icon.select_one('img.icon').get('src')
-            icon_small_text = icon.select_one('.text-sm').get_text(strip=True)
-            icon_bold_text = icon.select_one('.text').get_text(strip=True)
+            product_type_icon = icon.select_one('img.icon').get('src')
+            product_type_text_sm = icon.select_one('.text-sm').get_text(strip=True)
+            product_type_text_bold = icon.select_one('.text').get_text(strip=True)
 
         # 투어 참가 가능 연령 크롤링
         sidebar_notice_title = soup.select_one('.sidebar-inner-box > .notice-title').get_text(strip=True)
@@ -134,28 +144,13 @@ class ProductDetail:
         guide_name_div = soup.select_one('div.guide-name')
         guide_name = guide_name_div.contents[1].get_text(strip=True)
 
-        info_description = soup.select_one('div.guide-description > p').get_text(strip=True)
+        guide_description = soup.select_one('div.guide-description > p').get_text(strip=True)
 
         # iamge_list = soup.select('li.item')
 
         # 상품 정보 크롤링
         introduce_title = soup.select_one('div.introduce-container > div.title').get_text(strip=True)
         introduce_more = soup.select_one('div.introduce-container > p').get_text(strip=True)
-
-        # 코스 소개 크롤
-        course = soup.select_one('div.course-container > .offer-inner-container > .content-wrapper')
-
-        course_text = course.select_one('.title').get_text(strip=True)
-
-        course_lists = course.select('.course-list > .box > .box-wrapper')
-        # print(course_list)
-
-        for course_list in course_lists:
-            course_meet_place_time = course_list.get_text(strip=True)
-
-            course_description = course_list.select_one('.description-container')
-            course_description_title = course_description.select_one('.info-title').get_text(strip=True)
-            course_description_p = course_description.select_one('.info-description').get_text(strip=True)
 
         # 필수 안내 크롤링
         info_boxes = soup.select('.offer-inner-container > .content-center-narrow > .extra-info-container > .info-box')
@@ -164,19 +159,6 @@ class ProductDetail:
         for info_box in info_boxes:
             info_title = info_box.select_one('.title').get_text(strip=True)
             info_detail = info_box.select_one('p.more').get_text(strip=True)
-
-        # 리뷰 크롤링 (이미지 - 여행자 후기사진 글귀)
-        review = soup.select_one('div.review-photo-container')
-
-        review_photo = review.select_one('div.title').get_text(strip=True)
-
-        # 리뷰 크롤링 (여행자 - 후기사진 이미지)
-        items = soup.select('.review-photo-container > .item-container > .item')
-        for item in items:
-            img = item.select_one('img.img')
-            if img:
-                url = img.get('data-echo')
-                print(url)
 
         # 리뷰 크롤링 (글 - 후기 글귀)
         review_text_i = soup.select('div.review-list')
@@ -212,57 +194,92 @@ class ProductDetail:
 
             content = row_content.select_one('p.review-message').get_text(strip=True)
 
+        # 리뷰 크롤링 (이미지 - 여행자 후기사진 글귀)
+        review = soup.select_one('div.review-photo-container')
+        review_photo = review.select_one('div.title').get_text(strip=True)
 
-class ProductCategoriesList:
-    def __init__(self, city, country, categories,
-                 thumbnail, tour_name, title, review, price, category, meta_info):
-        self.city = city
-        self.country = country
-        self.categories = categories
-        self.country = country
-        self.thumbnail = thumbnail
-        self.tour_name = tour_name
-        self.title = title
-        self.review = review
-        self.price = price
-        self.category = category
-        self.meta_info = meta_info
-        self.category_list = list()
+        # 리뷰 크롤링 (여행자 - 후기사진 이미지)
+        items = soup.select('.review-photo-container > .item-container > .item')
+        for item in items:
+            img = item.select_one('img.img')
+            if img:
+                url = img.get('data-echo')
+                print(url)
 
-    def get_product_categories_list(self):
+    def get_course_list(self):
         params = {
-            'city': self.city,
-            'country': self.country,
-            'group_category': 'experience',
-            'categories%5B%5D': self.categories,
-            'order': 'popular',
+            'no': self.no,
         }
-
-        response = requests.get('https://www.myrealtrip.com/offers?', params)
+        response = requests.get('https://www.myrealtrip.com/offers/', params)
+        # print(response.text)
         soup = BeautifulSoup(response.text, 'lxml')
 
-        lists = soup.select('.list-wrapper > ul.item-container > li.item > .card-cover')
+        # 코스 소개 크롤
+        course = soup.select_one('div.course-container > .offer-inner-container > .content-wrapper')
 
-        for category_list in lists:
-            thumbnail = category_list.select_one('.img-container > .img-placeholder > img.img').get('data-echo')
-            tour_name = category_list.select_one('.content-box > .guide-container > .profile-name').get_text(strip=True)
-            title = category_list.select_one('.content-box > .name').get_text(strip=True)
-            review = category_list.select_one('.content-box > .review > .text').get_text(strip=True)
-            price = category_list.select_one('.content-box > .price').get_text(strip=True)
-            category = category_list.select_one('.content-box > .info-container > .category').get_text(strip=True)
-            meta_info = category_list.select_one('.content-box > .info-container > .meta-infos').get_text(strip=True)
+        course_text = course.select_one('.title').get_text(strip=True)
 
-            new_category_list = ProductCategoriesList(
-                city=self.city,
-                country=self.country,
-                categories=self.categories,
-                thumbnail=self.thumbnail,
-                tour_name=self.tour_name,
-                title=self.title,
-                review=self.review,
-                price=self.price,
-                category=self.category,
-                meta_info=self.meta_info,
-            )
-            self.category_list.append(new_category_list)
-            return category_list
+        course_lists = course.select('.course-list > .box > .box-wrapper')
+        # print(course_list)
+
+        for course_list in course_lists:
+            course_meet_place_time = course_list.get_text(strip=True)
+
+            course_description = course_list.select_one('.description-container')
+            course_description_title = course_description.select_one('.info-title').get_text(strip=True)
+            course_description_p = course_description.select_one('.info-description').get_text(strip=True)
+
+# class ProductCategoriesList:
+#     def __init__(self, city, country, categories,
+#                  thumbnail, tour_name, title, review, price, category, meta_info):
+#         self.city = city
+#         self.country = country
+#         self.categories = categories
+#         self.country = country
+#         self.thumbnail = thumbnail
+#         self.tour_name = tour_name
+#         self.title = title
+#         self.review = review
+#         self.price = price
+#         self.category = category
+#         self.meta_info = meta_info
+#         self.category_list = list()
+#
+#     def get_product_categories_list(self):
+#         params = {
+#             'city': self.city,
+#             'country': self.country,
+#             'group_category': 'experience',
+#             'categories%5B%5D': self.categories,
+#             'order': 'popular',
+#         }
+#
+#         response = requests.get('https://www.myrealtrip.com/offers?', params)
+#         soup = BeautifulSoup(response.text, 'lxml')
+#
+#         lists = soup.select('.list-wrapper > ul.item-container > li.item > .card-cover')
+#
+#         for category_list in lists:
+#             thumbnail = category_list.select_one('.img-container > .img-placeholder > img.img').get('data-echo')
+#             tour_name = category_list.select_one(
+# '.content-box > .guide-container > .profile-name').get_text(strip=True)
+#             title = category_list.select_one('.content-box > .name').get_text(strip=True)
+#             review = category_list.select_one('.content-box > .review > .text').get_text(strip=True)
+#             price = category_list.select_one('.content-box > .price').get_text(strip=True)
+#             category = category_list.select_one('.content-box > .info-container > .category').get_text(strip=True)
+#             meta_info = category_list.select_one('.content-box > .info-container > .meta-infos').get_text(strip=True)
+#
+#             new_category_list = ProductCategoriesList(
+#                 city=self.city,
+#                 country=self.country,
+#                 categories=self.categories,
+#                 thumbnail=self.thumbnail,
+#                 tour_name=self.tour_name,
+#                 title=self.title,
+#                 review=self.review,
+#                 price=self.price,
+#                 category=self.category,
+#                 meta_info=self.meta_info,
+#             )
+#             self.category_list.append(new_category_list)
+#             return category_list

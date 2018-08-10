@@ -23,16 +23,9 @@ class ProductList(models.Model):
     meta_info = models.CharField(max_length=20, blank=True)
 
     def get_product_list_crawler(self):
-        product_list = crawler.ProductList(
+        product_list = crawler.GetProduct(
             city=self.city,
             country=self.country,
-            tour_name=self.tour_name,
-            thumbnail=self.thumbnail,
-            title=self.title,
-            review=self.review,
-            price=self.price,
-            category=self.category,
-            meta_info=self.meta_info
         )
         product_list.get_product_list()
         result = product_list.product_list
@@ -43,7 +36,8 @@ class ProductDetailBase(models.Model):
     title = models.CharField(max_length=100)
     review_number = models.CharField(max_length=15, blank=True)
     product_type_icon = models.ImageField(upload_to='icon', blank=True)
-    product_type_text = models.CharField(max_length=50, blank=True)
+    product_type_text_sm = models.CharField(max_length=50, blank=True)
+    product_type_text_bold = models.CharField(max_length=50, blank=True)
     date = models.IntegerField()
     photo_review = models.ImageField(upload_to='review', blank=True)
     text_review = models.TextField(blank=True)
@@ -117,13 +111,13 @@ class Comment(models.Model):
         return f'{self.author.username}님의 댓글(후기)'
 
 
-class PriceInfoBase(models.Model):
-    date = models.IntegerField()
-    price = models.CharField(max_length=100, blank=True)
-
-    class Meta:
-        abstract = True
-
+# class PriceInfoBase(models.Model):
+#     date = models.IntegerField()
+#     price = models.CharField(max_length=100, blank=True)
+#
+#     class Meta:
+#         abstract = True
+#
 
 # class TicketPriceInfo(PriceInfoBase):
 #     ticket = models.ForeignKey(
