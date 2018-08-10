@@ -1,8 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 
+from products.models import PopularCityList
 
-class PopularCityList:
+
+class GetPopularCityList:
     def __init__(self, popular_image, popular_city_name):
         self.popular_image = popular_image
         self.popular_city_name = popular_city_name
@@ -20,8 +22,12 @@ class PopularCityList:
             popular_city_name = popular.select_one(
                 '.popular_cities__item_bottom > span.popular_cities__item__name').get_text(strip=True)
 
-            self.city_list.append(popular_image)
-            self.city_list.append(popular_city_name)
+            new_city_list = PopularCityList.objects.create(
+                popular_image=self.popular_image,
+                popular_city_name=self.popular_city_name,
+            )
+            self.city_list.append(new_city_list)
+
 
 
 class ProductList:

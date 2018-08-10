@@ -6,6 +6,7 @@ from region.models import Country
 
 def popular_city_list(request):
     popular_cities = PopularCityList.objects.all()
+    print(popular_cities)
     context = {
         'popular_cities': popular_cities,
     }
