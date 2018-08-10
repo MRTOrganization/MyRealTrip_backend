@@ -1,32 +1,34 @@
 import requests
 from bs4 import BeautifulSoup
 
-from products.models import PopularCityList
 
-
-class GetPopularCityList:
-    def __init__(self, popular_image, popular_city_name):
-        self.popular_image = popular_image
-        self.popular_city_name = popular_city_name
-        self.city_list = list()
-
+class GetPopularCity:
     def get_popular_city_list(self):
         response = requests.get('https://www.myrealtrip.com/experiences')
         soup = BeautifulSoup(response.text, 'lxml')
-
         populars = soup.select(
             '.popular_cities__container > .swiper-container > .swiper-wrapper > .swiper-slide > a.popular_cities__item')
 
+        # 결과를 담을 리스트
+        popular_city_list = list()
+
         for popular in populars:
+
             popular_image = popular.select_one('.popular_cities__item_top').get('style')
             popular_city_name = popular.select_one(
                 '.popular_cities__item_bottom > span.popular_cities__item__name').get_text(strip=True)
 
-            new_city_list = PopularCityList.objects.create(
-                popular_image=self.popular_image,
-                popular_city_name=self.popular_city_name,
-            )
-            self.city_list.append(new_city_list)
+            # dict에 해당 결과를 담음
+            popular_city_dict = dict()
+            popular_city_dict['popular_image'] = popular_image
+            popular_city_dict['popular_city_name'] = popular_city_name
+
+            # popular_city_list에 결과 dict를 추가함
+            popular_city_list.append(popular_city_dict)
+
+        return popular_city_list
+
+
 
 
 class ProductList:

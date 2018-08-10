@@ -42,6 +42,7 @@ AUTH_USER_MODEL = 'members.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+
 ]
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
@@ -56,6 +57,13 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mrtproject4@gmail.com'
 EMAIL_HOST_PASSWORD = secrets['EMAIL_HOST_PASSWORD']
 EMAIL_USE_TLS = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 INSTALLED_APPS = [
     'members',
@@ -84,6 +92,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.naver',
 
     'rest_framework',
+    'rest_framework.authtoken',
 
 ]
 
