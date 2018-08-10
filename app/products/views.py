@@ -1,12 +1,16 @@
 from django.shortcuts import render
 
-from products.models.product_city_list import PopularCityList
+from products.models import PopularCity
 from region.models import Country
 
 
 def popular_city_list(request):
-    popular_cities = PopularCityList.objects.all()
-    print(popular_cities)
+    # PopularCity 인스턴스를 생성
+    cities = PopularCity.objects.create()
+    # create_popular_city 클래스 메소드를 실행
+    cities.create_popular_city()
+    # PopularCity 객체를 전부 검색
+    popular_cities = PopularCity.objects.all()
     context = {
         'popular_cities': popular_cities,
     }
