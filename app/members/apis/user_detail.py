@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import Http404
 from rest_framework import generics, status
+from rest_framework.exceptions import NotAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -32,3 +33,11 @@ class UserDetail(APIView):
         user = self.get_obejct(pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserProfile(APIView):
+    # URL: /api/members/profile/
+    def get(self, request):
+        if request.user.is_authenticated:
+            return Response(UserSerializer(request.user).data)
+        raise NotAuthenticated('로그인 되어있지 않습니다.')

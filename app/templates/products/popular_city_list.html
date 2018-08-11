@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for popular_city in popular_cities %}
+        <h3>{{ popular_city.popular_city_name }}</h3>
+        <img src="popular_city.popular_image.url" alt="">
+
+    {% endfor %}
+
+{% endblock %}

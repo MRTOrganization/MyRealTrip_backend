@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+    {% for product_list in product_lists %}
+        <h3>{{ product_list }}</h3>
+    {% endfor %}
+
 {% endblock %}

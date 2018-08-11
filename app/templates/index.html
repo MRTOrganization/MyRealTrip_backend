@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Index page</h1>
-    <a href="{% url 'city-list' %}">한인민박 검색</a>
-
-    <a href="{% url 'product-list' %}">티켓 검색</a>
-
-    <a href="{% url 'hotel-list' %}">인기호텔 검색</a>
-
-    <a href="{% url 'flight-list' %}">항공권 검색</a>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'popular-city-list' %}">티켓 검색</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'flight-list' %}">항공권 검색</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'hotel-list' %}">인기호텔 검색</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'city-list' %}">한인민박 검색</a>
+        </li>
+    </ul>
 
 {% endblock %}
