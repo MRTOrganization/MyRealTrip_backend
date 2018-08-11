@@ -14,7 +14,8 @@ class GetPopularCity:
 
         for popular in populars:
 
-            popular_image = popular.select_one('.popular_cities__item_top').get('style')
+            popular_image = popular.select_one('.popular_cities__item_top').get('style')[22:-1]
+            print(popular_image)
             popular_city_name = popular.select_one(
                 '.popular_cities__item_bottom > span.popular_cities__item__name').get_text(strip=True)
 
@@ -25,11 +26,8 @@ class GetPopularCity:
 
             # popular_city_list에 결과 dict를 추가함
             popular_city_list.append(popular_city_dict)
-
+        print(popular_city_list)
         return popular_city_list
-
-
-
 
 
 class ProductList:
