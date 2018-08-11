@@ -18,11 +18,9 @@ pygments = "*"
 requests = "*"
 "beautifulsoup4" = "*"
 lxml = "*"
-
 jupyter = "*"
-
 selenium = "*"
-
+ipython = "*"
 
 [dev-packages]
 awsebcli = "*"

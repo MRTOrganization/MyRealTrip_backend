@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for product in products %}
+    <p>{{ productm.tourname }}</p>
+    <p>{{ product.title }}</p>
+    <img src="{{ product.thumbnail }}" alt="">
+    <p>{{ product.review }}</p>
+    <p>{{ product.price }}</p>
+    <p>{{ product.category }}</p>
+    <p>{{ product.meta_info }}</p>
+    
+{% endfor %}
+
+{% endblock %}

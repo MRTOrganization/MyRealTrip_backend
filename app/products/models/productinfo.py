@@ -4,8 +4,43 @@ from django.db import models
 from products import crawler
 from region.models import City, Country
 
+class ProductInfo(models.Model):
+    city = models.ForeignKey(
+        City,
+        on_delete=models.CASCADE,
+    )
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.CASCADE,
+    )
 
-class ProductList(models.Model):
+    def get_product_list_crawler(self):
+
+        product_list = crawler.ProductList(city=self.city, country=self.country)
+        product_list.get_product_list()
+
+        result = product_list.product_list
+        return result
+
+
+    def create_product(self):
+        products_list = self.get_product_list_crawler()
+
+        for product in products_list:
+            Product.objects.create(
+                city=product.city,
+                country=product.country,
+                thumbnail=product.thumbnail,
+                tour_name=product.tour_name,
+                title=product.title,
+                review=product.review,
+                price=product.price,
+                category=product.category,
+                meta_info=product.meta_info,
+            )
+
+
+class Product(models.Model):
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
@@ -22,21 +57,6 @@ class ProductList(models.Model):
     category = models.CharField(max_length=30)
     meta_info = models.CharField(max_length=20, blank=True)
 
-    def get_product_list_crawler(self):
-        product_list = crawler.ProductList(
-            city=self.city,
-            country=self.country,
-            tour_name=self.tour_name,
-            thumbnail=self.thumbnail,
-            title=self.title,
-            review=self.review,
-            price=self.price,
-            category=self.category,
-            meta_info=self.meta_info
-        )
-        product_list.get_product_list()
-        result = product_list.product_list
-        return result
 
 
 class ProductDetailBase(models.Model):
