@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from products.models import PopularCity
+from products.models.productinfo import ProductList
 from region.models import Country
 
 
@@ -18,7 +19,11 @@ def popular_city_list(request):
 
 
 def product_list(request):
-    product_lists = Country.objects.all()
+    products = ProductList.objects.create()
+    products.create_product_list()
+
+    product_lists = ProductList.objects.all()
+    print(product_lists)
     context = {
         'product_lists': product_lists,
     }

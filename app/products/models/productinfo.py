@@ -15,7 +15,7 @@ class ProductList(models.Model):
         on_delete=models.CASCADE,
     )
     tour_name = models.CharField(max_length=15)
-    thumbnail = models.ImageField(upload_to='product_thumbnail', blank=True)
+    thumbnail = models.ImageField(upload_to='product_thumbnail', blank=True, null=True)
     title = models.CharField(max_length=100)
     review = models.CharField(max_length=20)
     price = models.CharField(max_length=20)
@@ -23,13 +23,23 @@ class ProductList(models.Model):
     meta_info = models.CharField(max_length=20, blank=True)
 
     def get_product_list_crawler(self):
-        product_list = crawler.GetProduct(
-            city=self.city,
-            country=self.country,
-        )
-        product_list.get_product_list()
-        result = product_list.product_list
-        return result
+        product_list = crawler.GetProduct().get_product_list()
+        return product_list
+
+    def create_product_list(self):
+        product_lists = self.get_product_list_crawler()
+        for product_list in product_lists:
+            ProductList.objects.create(
+                city=product_list['city'],
+                country=product_list['country'],
+                tour_name=product_list['tour_name'],
+                thumbnail=product_list['thumbnail'],
+                title=product_list['title'],
+                review=product_list['review'],
+                price=product_list['price'],
+                category=product_list['category'],
+                meta_info=product_list['meta_info'],
+            )
 
 
 class ProductDetailBase(models.Model):
