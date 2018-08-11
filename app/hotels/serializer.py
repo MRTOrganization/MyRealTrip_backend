@@ -23,6 +23,4 @@ class KHotelDetailSerializer(serializers.ModelSerializer):
             'thumbnail',
             'comments',
             'price',
-            'date',
-            'content',
         )

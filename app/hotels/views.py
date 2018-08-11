@@ -18,6 +18,7 @@ def koreanhotel_list(request, country, city):
     icity = City.objects.filter(name=city)[0]
     koreanhotels = KoreanHotelInfo.objects.create(country=icountry, city=icity)
     koreanhotels_list = koreanhotels.get_koreanhotel_list()
+    koreanhotels.create_koreanhotel()
     context = {
         'koreanhotels_list': koreanhotels_list,
     }
