@@ -12,7 +12,8 @@ class HotelList(APIView):
         return Response(serializer.data)
 
 class HotelDetail(APIView):
-    def get(self, request, format=None):
-        hotels = KoreanHotel.objects.all()
+    def get(self, request, country, city, format=None):
+        hotels = KoreanHotel.objects.filter(country__name__contains=country).filter(city__name__contains=city)
+        print(hotels)
         serializer = KHotelDetailSerializer(hotels, many=True)
         return Response(serializer.data)
