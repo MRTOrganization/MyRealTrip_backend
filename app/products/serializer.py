@@ -1,6 +1,17 @@
 from rest_framework import serializers
+
+from products.models import PopularCity
 from products.models.productinfo import ProductInfo, Product
 
+
+class PopularCitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PopularCity
+        fields = (
+            'pk',
+            'popular_image',
+            'popular_city_name',
+        )
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
