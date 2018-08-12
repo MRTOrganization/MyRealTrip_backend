@@ -2,13 +2,23 @@
 {% block content %}
     <div class="container clearfix">
         <p><a href="{% url 'product-list' %}">나라별 투어티켓 보기</a></p>
-    {% for popular_city in popular_cities %}
+        <form action="{% url 'product-search' %}" method="GET">
+            <div class="input-group mb-3" style="max-width: 800px;">
+                <input type="text" class="form-control" placeholder="나라/도시 또는 키워드를 입력하세요"
+                       aria-describedby="button-addon2" name="keyword">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+                </div>
+            </div>
+        </form>
+
+        {% for popular_city in popular_cities %}
             <div class="float-left">
                 <div class="card">
                     <img class="card-img-top" src="{{ popular_city.popular_image }}">
                     <h5 class="card-title" style="text-align: center">{{ popular_city.popular_city_name }}</h5>
                 </div>
             </div>
-    {% endfor %}
+        {% endfor %}
     </div>
 {% endblock %}

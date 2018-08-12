@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.db.models import Q
+from django.shortcuts import render, redirect
 
 from products.models import PopularCity
 from products.models.productinfo import Product, ProductInfo
@@ -43,5 +44,22 @@ def product_city_content(request, country, city):
     }
     return render(request, 'products/products_city_content.html', context)
 
-def product_detail(request, pk):
-    pass
+def product_search(request):
+    keyword = request.GET['keyword']
+    if keyword:
+        results = Product.objects.filter(
+            Q(country__name__contains=keyword)|
+            Q(city__name__contains=keyword)|
+            Q(tour_name__contains=keyword)|
+            Q(title__contains=keyword)
+        )
+        if len(results) == 0:
+            return render(request, 'products/products_search_not_found.html')
+        else:
+            context = {
+                'results':results,
+            }
+            return render(request, 'products/products_search_result.html', context)
+    else:
+        return redirect('popular-city-list')
+

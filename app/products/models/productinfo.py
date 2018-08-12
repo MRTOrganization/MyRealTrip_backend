@@ -49,12 +49,12 @@ class Product(models.Model):
         Country,
         on_delete=models.CASCADE,
     )
-    tour_name = models.CharField(max_length=100)
+    tour_name = models.CharField(max_length=255)
     thumbnail = models.ImageField(upload_to='product_thumbnail', blank=True, max_length=500)
-    title = models.CharField(max_length=100)
-    review = models.CharField(max_length=100)
-    price = models.CharField(max_length=100)
-    category = models.CharField(max_length=100)
+    title = models.CharField(max_length=255)
+    review = models.CharField(max_length=255)
+    price = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
     meta_info = models.CharField(max_length=500, blank=True)
 
 
