@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
     {% for product in products %}
-        <p>{{ productm.tourname }}</p>
-        <p>{{ product.title }}</p>
-        <img src="{{ product.thumbnail }}" alt="">
-        <p>{{ product.review }}</p>
-        <p>{{ product.price }}</p>
-        <p>{{ product.category }}</p>
-        <p>{{ product.meta_info }}</p>
+        <div class="card" style="width: 50%; min-width: 600px; margin: auto">
+            <div class="card-title">
+                <p style="text-align: center"><strong>{{ product.title }}</strong></p>
+                <p style="text-align: right"><strong>{{ product.tour_name }}</strong></p>
+            </div>
+            <img class="card-img-top" src="{{ product.thumbnail }}" style="width: 100%">
+            <div class="card-body">
+                <p>{{ product.review }}</p>
+                <p>가격 : {{ product.price }}</p>
+                <p>티켓종류 : {{ product.category }}</p>
+                <p>여행정보 : {{ product.meta_info }}</p>
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}

@@ -30,9 +30,14 @@ def product_list(request):
 
 
 def product_city_content(request, country, city):
-    product = ProductInfo.objects.create(country=Country.objects.get(name=country), city=City.objects.get(name=city))
-    product.create_product()
-    products = Product.objects.filter(country=Country.objects.get(name=country)).filter(city=City.objects.get(name=city))
+    products = Product.objects.filter(country=Country.objects.get(name=country)).filter(
+        city=City.objects.get(name=city))
+    if len(products) == 0:
+        product_info = ProductInfo.objects.create(country=Country.objects.get(name=country), city=City.objects.get(name=city))
+        product_info.create_product()
+
+    products = Product.objects.filter(country=Country.objects.get(name=country)).filter(
+        city=City.objects.get(name=city))
     context = {
         'products':products,
     }
