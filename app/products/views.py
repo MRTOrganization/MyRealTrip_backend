@@ -1,9 +1,11 @@
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
+
 
 from products.models import PopularCity
 from products.models.productinfo import Product, ProductInfo
 from region.models import Country, City
+from wishlist.models import WishList
 
 
 def popular_city_list(request):
@@ -39,10 +41,24 @@ def product_city_content(request, country, city):
 
     products = Product.objects.filter(country=Country.objects.get(name=country)).filter(
         city=City.objects.get(name=city))
+    wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
     context = {
         'products':products,
+        'wishlist':wishlist,
     }
     return render(request, 'products/products_city_content.html', context)
+
+def product_wishlist(request, pk):
+    if request.method == 'POST':
+        product = Product.objects.get(pk=pk)
+        wish_list = WishList.objects.filter(user=request.user, product=product)
+        if wish_list:
+            wish_list.delete()
+        else:
+            wish_list = WishList.objects.create(user=request.user)
+            wish_list.product.add(product)
+        return redirect('index')
+
 
 def product_search(request):
     keyword = request.GET['keyword']

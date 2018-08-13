@@ -58,7 +58,6 @@ class Product(models.Model):
     meta_info = models.CharField(max_length=500, blank=True)
 
 
-
 class ProductDetailBase(models.Model):
     title = models.CharField(max_length=100)
     review_number = models.CharField(max_length=15, blank=True)
