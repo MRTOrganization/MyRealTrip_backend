@@ -12,6 +12,7 @@ class PHotelSerializer(serializers.ModelSerializer):
             'country',
         )
 
+
 class PHotelDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = PopularHotel
