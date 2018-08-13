@@ -50,7 +50,7 @@ class Product(models.Model):
         on_delete=models.CASCADE,
     )
     tour_name = models.CharField(max_length=15)
-    thumbnail = models.ImageField(upload_to='product_thumbnail', blank=True)
+    thumbnail = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     review = models.CharField(max_length=20)
     price = models.CharField(max_length=20)
