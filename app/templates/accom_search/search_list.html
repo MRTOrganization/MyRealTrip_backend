@@ -2,6 +2,20 @@
 {% block content %}
 
 <h4>호텔 검색 페이지</h4>
-
-
+    <form action="" method="POST">
+    {% csrf_token %}
+        <div class="container">
+            <label for="">여행지<input type="text" name="attraction"></label>
+            <label for="">체크인<input type="text" name="checkin"></label>
+            <label for="">체크아웃<input type="text" name="checkout"></label>
+            <label for="">인원(어른)<input type="text" name="group_adults"></label>
+            <label for="">인원(어린이)<input type="text" name="group_children"></label>
+            <label for="">객실<input type="text" name="no_rooms"></label>
+            <button class="btn btn-primary">검색</button>
+        </div>
+    <p>최근 검색 기록</p>
+    {% for accom_search in accom_searchs %}
+        <p><a href="{% url 'accom-search-detail' accom_search.pk %}">{{ accom_search }}</a></p>
+    {% endfor %}
+    </form>
 {% endblock %}

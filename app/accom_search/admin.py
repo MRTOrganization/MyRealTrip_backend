@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from accom_search.models import AccomSearchInfo, AccomSearchInfoDetail
+
+admin.site.register(AccomSearchInfo)
+admin.site.register(AccomSearchInfoDetail)
