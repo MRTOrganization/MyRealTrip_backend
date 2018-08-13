@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>My page</h1>
+<h3>Wish List</h3>
+
+{% for item in wishlist %}
+    <p>{{ item.product.first.title }}</p>
+    <img src="{{ item.product.first.thumbnail }}" alt="">
+
+{% endfor %}
+
 {% endblock %}

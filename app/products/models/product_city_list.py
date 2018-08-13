@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 from products import crawler
+from region.models import Country
 
 __all__ = (
     'PopularCity',
@@ -9,8 +10,7 @@ __all__ = (
 
 class PopularCity(models.Model):
     popular_image = models.ImageField(upload_to='popular-city-image', blank=True)
-    popular_city_name = models.CharField(max_length=10)
-
+    popular_city_name = models.CharField(max_length=50)
     # crwaler를 실행하여 popular_city_list를 반환함
     def get_popular_city_crawler(self):
         popular_city_list = crawler.GetPopularCity().get_popular_city_list()
@@ -22,7 +22,7 @@ class PopularCity(models.Model):
         for city in city_list:
             PopularCity.objects.create(
                 popular_image=city['popular_image'],
-                popular_city_name=city['popular_city_name']
+                popular_city_name=city['popular_city_name'],
             )
 
 

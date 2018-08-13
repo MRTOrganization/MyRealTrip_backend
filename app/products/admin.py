@@ -1,14 +1,11 @@
 from django.contrib import admin
 
 from products.models import PopularCity
-from products.models.productinfo import \
-    ProductList, Comment, \
-    ProductTicketDetail, ProductGuideTourDetail, \
-    ProductActivityDetail
+from products.models.productinfo import Product
 
 admin.site.register(PopularCity)
 
-admin.site.register(ProductList)
+admin.site.register(Product)
 # admin.site.register(Comment)
 # admin.site.register(ProductTicketDetail)
 # admin.site.register(ProductGuideTourDetail)

@@ -26,11 +26,10 @@ class GetPopularCity:
 
             # popular_city_list에 결과 dict를 추가함
             popular_city_list.append(popular_city_dict)
-        print(popular_city_list)
         return popular_city_list
 
 
-class ProductList:
+class Product:
     def __init__(self, city, country, thumbnail, tour_name, title, review, price, category, meta_info):
         self.city = city
         self.country = country
@@ -43,7 +42,7 @@ class ProductList:
         self.meta_info = meta_info
 
 
-class Product:
+class ProductList:
     def __init__(self, city, country):
         self.city = city
         self.country = country
@@ -76,7 +75,7 @@ class Product:
 
             meta_info = item.select_one('div.meta-infos').get_text(strip=True)
 
-            new_product_list = ProductList(
+            new_product_list = Product(
                 city=self.city,
                 country=self.country,
                 thumbnail=thumbnail,

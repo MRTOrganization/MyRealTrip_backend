@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for result in results %}
+        <div class="card" style="width: 50%; min-width: 600px; margin: auto">
+            <div class="card-title">
+                <p style="text-align: center"><strong>{{ result.title }}</strong></p>
+                <p style="text-align: right"><strong>{{ result.tour_name }}</strong></p>
+            </div>
+            <img class="card-img-top" src="{{ result.thumbnail }}" style="width: 100%">
+            <div class="card-body">
+                <p>{{ result.review }}</p>
+                <p>가격 : {{ result.price }}</p>
+                <p>티켓종류 : {{ result.category }}</p>
+                <p>여행정보 : {{ result.meta_info }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
