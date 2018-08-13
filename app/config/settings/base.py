@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'accommodations',
     'wishlist',
     'reservation',
+    'accom_search',
 
     'django.contrib.admin',
     'django.contrib.auth',
