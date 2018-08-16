@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from .. import views
 
 urlpatterns = [
     path('', views.accom_search_list, name='accom-search-list'),
