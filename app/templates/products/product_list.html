@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    {% for product_list in product_lists %}
-        <h3>{{ product_list }}</h3>
+    {% for country in countries %}
+        <h2>{{ country }}</h2>
+        {% for city in country.city_set.all %}
+            <a href="{% url 'product-city-content' country city %}"><p><strong>{{ city }}</strong></p></a>
+        {% endfor %}
+
     {% endfor %}
 
 {% endblock %}

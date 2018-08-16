@@ -4,8 +4,43 @@ from django.db import models
 from products import crawler
 from region.models import City, Country
 
+class ProductInfo(models.Model):
+    city = models.ForeignKey(
+        City,
+        on_delete=models.CASCADE,
+    )
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.CASCADE,
+    )
 
-class ProductList(models.Model):
+    def get_product_list_crawler(self):
+
+        product_list = crawler.ProductList(city=self.city, country=self.country)
+        product_list.get_product_list()
+
+        result = product_list.product_list
+        return result
+
+
+    def create_product(self):
+        products_list = self.get_product_list_crawler()
+
+        for product in products_list:
+            Product.objects.create(
+                city=product.city,
+                country=product.country,
+                thumbnail=product.thumbnail,
+                tour_name=product.tour_name,
+                title=product.title,
+                review=product.review,
+                price=product.price,
+                category=product.category,
+                meta_info=product.meta_info,
+            )
+
+
+class Product(models.Model):
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
@@ -15,39 +50,19 @@ class ProductList(models.Model):
         on_delete=models.CASCADE,
     )
     tour_name = models.CharField(max_length=15)
-    thumbnail = models.ImageField(upload_to='product_thumbnail', blank=True, null=True)
+    thumbnail = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     review = models.CharField(max_length=20)
     price = models.CharField(max_length=20)
     category = models.CharField(max_length=30)
     meta_info = models.CharField(max_length=20, blank=True)
 
-    def get_product_list_crawler(self):
-        product_list = crawler.GetProduct().get_product_list()
-        return product_list
-
-    def create_product_list(self):
-        product_lists = self.get_product_list_crawler()
-        for product_list in product_lists:
-            ProductList.objects.create(
-                city=product_list['city'],
-                country=product_list['country'],
-                tour_name=product_list['tour_name'],
-                thumbnail=product_list['thumbnail'],
-                title=product_list['title'],
-                review=product_list['review'],
-                price=product_list['price'],
-                category=product_list['category'],
-                meta_info=product_list['meta_info'],
-            )
-
 
 class ProductDetailBase(models.Model):
     title = models.CharField(max_length=100)
     review_number = models.CharField(max_length=15, blank=True)
     product_type_icon = models.ImageField(upload_to='icon', blank=True)
-    product_type_text_sm = models.CharField(max_length=50, blank=True)
-    product_type_text_bold = models.CharField(max_length=50, blank=True)
+    product_type_text = models.CharField(max_length=50, blank=True)
     date = models.IntegerField()
     photo_review = models.ImageField(upload_to='review', blank=True)
     text_review = models.TextField(blank=True)
@@ -121,13 +136,13 @@ class Comment(models.Model):
         return f'{self.author.username}님의 댓글(후기)'
 
 
-# class PriceInfoBase(models.Model):
-#     date = models.IntegerField()
-#     price = models.CharField(max_length=100, blank=True)
-#
-#     class Meta:
-#         abstract = True
-#
+class PriceInfoBase(models.Model):
+    date = models.IntegerField()
+    price = models.CharField(max_length=100, blank=True)
+
+    class Meta:
+        abstract = True
+
 
 # class TicketPriceInfo(PriceInfoBase):
 #     ticket = models.ForeignKey(

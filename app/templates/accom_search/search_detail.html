@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for accom_search_detail in accom_search_details %}
+        <div class="container">
+            <div class="text-center">
+                {{ accom_search_detail.attraction }}
+                {{ accom_search_detail.checkin }}
+                {{ accom_search_detail.checkout }}
+                {{ accom_search_detail.group_adults }}
+                {{ accom_search_detail.group_children }}
+                {{ accom_search_detail.no_rooms }}
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
