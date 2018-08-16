@@ -27,7 +27,7 @@ def flight_list(request):
 
 def flight_detail(request, pk):
     flight_info = FlightInfo.objects.filter(pk=pk)[0]
-    flight_info.get_flight_info()
+    flight_info.get_flight_url()
     flight_details = flight_info.flightinfodetail_set.all()
     context = {
         'flight_info':flight_info,

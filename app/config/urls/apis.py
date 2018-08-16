@@ -6,4 +6,5 @@ urlpatterns = [
     path('hotels/', include('hotels.urls.apis')),
     path('products/', include('products.urls.apis')),
     path('accommodations/', include('accommodations.urls.apis')),
+    path('accom-search/', include('accom_search.urls.apis')),
 ]
