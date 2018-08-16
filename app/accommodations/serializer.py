@@ -18,10 +18,11 @@ class PHotelDetailSerializer(serializers.ModelSerializer):
         model = PopularHotel
         fields = (
             'pk',
-            'name',
             'city',
             'country',
             'thumbnail',
+            'hotel_name',
+            'grade',
             'comments',
             'price',
         )
