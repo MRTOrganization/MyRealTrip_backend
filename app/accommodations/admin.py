@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from accommodations.models import PopularHotelInfo, PopularHotel
+
+admin.site.register(PopularHotel)
+admin.site.register(PopularHotelInfo)
