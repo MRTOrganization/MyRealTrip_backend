@@ -25,9 +25,12 @@ class UserList(APIView):
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
+
             user = serializer.save()
+            user.set_password(raw_password=request.data['password'])
             user.is_active = False
             user.save()
+
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
             message = render_to_string('members/user_activate_email.html', {
