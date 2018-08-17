@@ -33,6 +33,7 @@ class KoreanHotelInfo(models.Model):
                 thumbnail=koreanhotel.thumbnail,
                 comments=koreanhotel.comments,
                 price=koreanhotel.price,
+                detail_url=koreanhotel.detail_url,
             )
 
 
@@ -49,3 +50,13 @@ class KoreanHotel(models.Model):
     thumbnail = models.ImageField(upload_to='koreanhotel', blank=True)
     comments = models.CharField(max_length=50, blank=True)
     price = models.CharField(max_length=50, blank=True)
+    detail_url = models.CharField(max_length=250, blank=True)
+
+
+
+
+class KoreanHotelDetail(models.Model):
+    korean_hotel = models.ForeignKey(KoreanHotel, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, blank=True)
+    pictures = models.CharField(max_length=500, blank=True)
+    infos = models.CharField(max_length=500, blank=True)
