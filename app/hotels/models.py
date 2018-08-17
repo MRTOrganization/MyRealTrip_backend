@@ -38,7 +38,7 @@ class KoreanHotelInfo(models.Model):
 
 
 class KoreanHotel(models.Model):
-    name = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=255, blank=True)
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
@@ -48,15 +48,15 @@ class KoreanHotel(models.Model):
         on_delete=models.CASCADE
     )
     thumbnail = models.ImageField(upload_to='koreanhotel', blank=True)
-    comments = models.CharField(max_length=50, blank=True)
-    price = models.CharField(max_length=50, blank=True)
-    detail_url = models.CharField(max_length=250, blank=True)
+    comments = models.CharField(max_length=255, blank=True)
+    price = models.CharField(max_length=255, blank=True)
+    detail_url = models.CharField(max_length=255, blank=True)
 
 
 
 
 class KoreanHotelDetail(models.Model):
     korean_hotel = models.ForeignKey(KoreanHotel, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, blank=True)
+    name = models.CharField(max_length=255, blank=True)
     pictures = models.CharField(max_length=500, blank=True)
     infos = models.CharField(max_length=500, blank=True)

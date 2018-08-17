@@ -6,10 +6,10 @@ from flights import crawler
 
 
 class FlightInfo(models.Model):
-    origin = models.CharField(max_length=200, blank=True)
-    destination = models.CharField(max_length=200, blank=True)
-    depart_date = models.CharField(max_length=100, blank=True)
-    return_date = models.CharField(max_length=100, blank=True)
+    origin = models.CharField(max_length=255, blank=True)
+    destination = models.CharField(max_length=255, blank=True)
+    depart_date = models.CharField(max_length=255, blank=True)
+    return_date = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return f'{self.destination}행 {self.depart_date} ~ {self.return_date} 일 티켓'

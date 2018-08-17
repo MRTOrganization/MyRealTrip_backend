@@ -55,10 +55,10 @@ class PopularHotel(models.Model):
         Country,
         on_delete=models.CASCADE
     )
-    thumbnail = models.ImageField(upload_to='popularhotel', blank=True)
-    hotel_name = models.CharField(max_length=50, blank=True)
+    thumbnail = models.CharField(max_length=500, blank=True)
+    hotel_name = models.CharField(max_length=255, blank=True)
     grade = models.TextField()
-    comments = models.CharField(max_length=50, blank=True)
-    price = models.CharField(max_length=50, blank=True)
+    comments = models.CharField(max_length=255, blank=True)
+    price = models.CharField(max_length=255, blank=True)
 
 

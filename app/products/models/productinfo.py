@@ -49,24 +49,24 @@ class Product(models.Model):
         Country,
         on_delete=models.CASCADE,
     )
-    tour_name = models.CharField(max_length=15)
+    tour_name = models.CharField(max_length=255)
     thumbnail = models.CharField(max_length=500)
-    title = models.CharField(max_length=100)
-    review = models.CharField(max_length=20)
-    price = models.CharField(max_length=20)
-    category = models.CharField(max_length=30)
-    meta_info = models.CharField(max_length=20, blank=True)
+    title = models.CharField(max_length=255)
+    review = models.CharField(max_length=255)
+    price = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
+    meta_info = models.CharField(max_length=255, blank=True)
 
 
 class ProductDetailBase(models.Model):
-    title = models.CharField(max_length=100)
-    review_number = models.CharField(max_length=15, blank=True)
+    title = models.CharField(max_length=255)
+    review_number = models.CharField(max_length=255, blank=True)
     product_type_icon = models.ImageField(upload_to='icon', blank=True)
-    product_type_text = models.CharField(max_length=50, blank=True)
+    product_type_text = models.CharField(max_length=255, blank=True)
     date = models.IntegerField()
     photo_review = models.ImageField(upload_to='review', blank=True)
     text_review = models.TextField(blank=True)
-    guide_name = models.CharField(max_length=20)
+    guide_name = models.CharField(max_length=255)
     guide_description = models.TextField()
     necessary_guide = models.TextField(blank=True)
 
@@ -79,7 +79,7 @@ class ProductTicketDetail(ProductDetailBase):
         City,
         related_name='city_ticket',
     )
-    select_option = models.CharField(max_length=30)
+    select_option = models.CharField(max_length=255)
     info_photo = models.ImageField(upload_to='information', blank=True)
     information = models.TextField()
 
@@ -138,7 +138,7 @@ class Comment(models.Model):
 
 class PriceInfoBase(models.Model):
     date = models.IntegerField()
-    price = models.CharField(max_length=100, blank=True)
+    price = models.CharField(max_length=255, blank=True)
 
     class Meta:
         abstract = True
