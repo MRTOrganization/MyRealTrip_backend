@@ -42,7 +42,7 @@ AUTH_USER_MODEL = 'members.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-
+    'members.backends.EmailBackend',
 ]
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
