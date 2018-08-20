@@ -15,3 +15,4 @@ class UserSerializer(serializers.ModelSerializer):
             'introduce',
         )
 
+
