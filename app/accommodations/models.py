@@ -23,6 +23,19 @@ class PopularHotelInfo(models.Model):
         result = popularhotel_list.popularhotel_list
         return result
 
+    def create_popularhotel(self):
+        popularhotel_list = self.get_popularhotel_list()
+        for popularhotel in popularhotel_list:
+            PopularHotel.objects.create(
+                city=popularhotel.city,
+                country=popularhotel.country,
+                thumbnail=popularhotel.thumbnail,
+                hotel_name=popularhotel.hotel_name,
+                grade=popularhotel.grade,
+                comments=popularhotel.comments,
+                price=popularhotel.price,
+            )
+
     def get_popularcity_list(self):
         popularcity_list = crawlers.PopularHotelList(
             city=self.city,
@@ -34,7 +47,6 @@ class PopularHotelInfo(models.Model):
 
 
 class PopularHotel(models.Model):
-    name = models.CharField(max_length=50, blank=True)
     city = models.ForeignKey(
         City,
         on_delete=models.CASCADE,
@@ -43,23 +55,10 @@ class PopularHotel(models.Model):
         Country,
         on_delete=models.CASCADE
     )
-    thumbnail = models.ImageField(upload_to='popularhotel', blank=True)
-    comments = models.CharField(max_length=50, blank=True)
-    price = models.CharField(max_length=50, blank=True)
-    date = models.DateTimeField(auto_now_add=True)
-    content = models.TextField()
-
-    # like = models.ForeignKey
+    thumbnail = models.CharField(max_length=500, blank=True)
+    hotel_name = models.CharField(max_length=255, blank=True)
+    grade = models.TextField()
+    comments = models.CharField(max_length=255, blank=True)
+    price = models.CharField(max_length=255, blank=True)
 
 
-class PopularHotelPriceInfo(models.Model):
-    popular_hotel = models.ForeignKey(
-        PopularHotel,
-        on_delete=models.CASCADE,
-        null=True,
-    )
-    date = models.IntegerField()
-    price = models.CharField(max_length=100, blank=True)
-
-    def __str__(self):
-        return f'{self.popular_hotel}의 가격 : {self.price}'
