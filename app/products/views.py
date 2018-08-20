@@ -78,4 +78,3 @@ def product_search(request):
             return render(request, 'products/products_search_result.html', context)
     else:
         return redirect('popular-city-list')
-

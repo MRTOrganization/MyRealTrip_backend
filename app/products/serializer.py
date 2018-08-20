@@ -37,3 +37,10 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'category',
             'meta_info',
         )
+
+class ProductSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = (
+
+        )

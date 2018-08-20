@@ -1,5 +1,5 @@
 from django.db.models import Q
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,11 +14,13 @@ class PopularCityList(APIView):
         serializer = PopularCitySerializer(popular_cities, many=True)
         return Response(serializer.data)
 
+
 class ProductList(APIView):
     def get(self, request, format=None):
         products = ProductInfo.objects.all()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
+
 
 class ProductDetail(APIView):
     def get(self, request, country, city, format=None):
