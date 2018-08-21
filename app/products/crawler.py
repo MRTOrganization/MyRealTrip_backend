@@ -55,7 +55,6 @@ class ProductList:
         }
 
         response = requests.get('https://www.myrealtrip.com/offers?', params)
-        # print(response.text)
         soup = BeautifulSoup(response.text, 'lxml')
 
         item_list = soup.select('li.item')
