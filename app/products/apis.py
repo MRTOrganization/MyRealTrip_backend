@@ -5,7 +5,8 @@ from rest_framework.views import APIView
 
 from products.models import PopularCity
 from products.models.productinfo import ProductInfo, Product
-from products.serializer import ProductSerializer, ProductDetailSerializer, PopularCitySerializer
+from products.serializer import ProductSerializer, PopularCitySerializer, \
+    ProductListSerializer, ProductTicketDetailSerializer, ProductDetailSerializer
 
 
 class PopularCityList(APIView):
@@ -15,18 +16,34 @@ class PopularCityList(APIView):
         return Response(serializer.data)
 
 
+class ProductCityList(APIView):
+    def get(self, request, format=None):
+        product_city = ProductInfo.objects.all()
+        serializer = ProductSerializer(product_city, many=True)
+        return Response(serializer.data)
+
+
 class ProductList(APIView):
     def get(self, request, format=None):
-        products = ProductInfo.objects.all()
-        serializer = ProductSerializer(products, many=True)
+        products = Product.objects.all()
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 
 class ProductDetail(APIView):
     def get(self, request, country, city, format=None):
+        print(country)
+        print(city)
         products = Product.objects.filter(country__name__contains=country).filter(city__name__contains=city)
         serializer = ProductDetailSerializer(products, many=True)
         return Response(serializer.data)
+
+
+# class ProductTicket(APIView):
+#     def get(self, request, country, city, format=None):
+#         products = Product.objects.filter(country__name__contains=country).filter(city__name__contains=city)
+#         serializer = ProductTicketDetailSerializer(products, many=True)
+#         return Response(serializer.data)
 
 
 class ProductSearch(generics.ListAPIView):
