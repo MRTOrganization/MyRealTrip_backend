@@ -10,6 +10,7 @@ urlpatterns = [
     path('product_list/tickets/', apis.ProductListTicket.as_view()),
     path('product_list/activities/', apis.ProductListActivity.as_view()),
     path('product_list/snapshot/', apis.ProductListSnapShot.as_view()),
+    path('product_list/restaurants/', apis.ProductListRestaunrant.as_view()),
     path('product_list/fun/', apis.ProductListFun.as_view()),
     path('product_list/convenience/', apis.ProductListConvenience.as_view()),
     path('product_search/<str:keyword>/', apis.ProductSearch.as_view()),
