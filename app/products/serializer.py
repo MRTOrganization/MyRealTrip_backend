@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from products.models import PopularCity
 from products.models.productinfo import ProductInfo, Product
+from region.models import City, Country
 
 
 class PopularCitySerializer(serializers.ModelSerializer):
@@ -13,7 +14,29 @@ class PopularCitySerializer(serializers.ModelSerializer):
             'popular_city_name',
         )
 
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = (
+            'pk',
+            'name',
+        )
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = (
+            'pk',
+            'name',
+        )
+
+
 class ProductSerializer(serializers.ModelSerializer):
+    city = CitySerializer()
+    country = CountrySerializer()
+
     class Meta:
         model = ProductInfo
         fields = (
@@ -21,6 +44,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'city',
             'country',
         )
+
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,6 +61,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'category',
             'meta_info',
         )
+
 
 class ProductSearchSerializer(serializers.ModelSerializer):
     class Meta:

@@ -41,12 +41,16 @@ def product_city_content(request, country, city):
 
     products = Product.objects.filter(country=Country.objects.get(name=country)).filter(
         city=City.objects.get(name=city))
-    wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
+    # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
     context = {
         'products':products,
-        'wishlist':wishlist,
+        # 'wishlist':wishlist,
     }
     return render(request, 'products/products_city_content.html', context)
+
+def product_detail(request, pk):
+    pass
+
 
 def product_wishlist(request, pk):
     if request.method == 'POST':

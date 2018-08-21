@@ -7,5 +7,5 @@ urlpatterns = [
     path('product_list/', apis.ProductList.as_view()),
     path('product_search/<str:keyword>/', apis.ProductSearch.as_view()),
     path('product_list/<str:country>/<str:city>/', apis.ProductDetail.as_view()),
-
+    path('product_list/<str:country>/<str:city>/detail/', apis.ProductDetail.as_view()),
 ]
