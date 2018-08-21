@@ -55,7 +55,6 @@ class ProductList:
         }
 
         response = requests.get('https://www.myrealtrip.com/offers?', params)
-        # print(response.text)
         soup = BeautifulSoup(response.text, 'lxml')
 
         item_list = soup.select('li.item')
@@ -88,24 +87,24 @@ class ProductList:
             )
 
             self.product_list.append(new_product_list)
+        return self.product_list
 
 
 class ProductDetail:
-    def __init__(self, no, title, region, review, guide_image, guide_name, info_description):
+    def __init__(self, no, title, review, guide_image, guide_name, info_description):
         self.title = title
-        self.region = region
         self.review = review
         self.guide_image = guide_image
         self.guide_name = guide_name
         self.info_description = info_description
         self.no = no
+        self.product_detail_list = list()
 
     def get_product_detail(self):
         params = {
             'no': self.no,
         }
         response = requests.get('https://www.myrealtrip.com/offers/', params)
-        # print(response.text)
         soup = BeautifulSoup(response.text, 'lxml')
 
         # 상품 제목, 국가정보, 리뷰 수 크롤링
@@ -113,17 +112,20 @@ class ProductDetail:
 
         for container in title_container_list:
             title = container.select_one('div.offer-title').get_text(strip=True)
-            region_info = container.select_one('div.inner-container ')
-            #     print(region_info)
             review = container.select_one('div.score-container > span.text-gray').get_text(strip=True)
 
         # 아이콘 크롤
+        new_icon = list()
         icon_container = soup.select('.info-icon-container > .icon-item')
         # print(icon_container)
         for icon in icon_container:
             icon_image = icon.select_one('img.icon').get('src')
             icon_small_text = icon.select_one('.text-sm').get_text(strip=True)
             icon_bold_text = icon.select_one('.text').get_text(strip=True)
+
+            new_icon.append(icon_image)
+            new_icon.append(icon_small_text)
+            new_icon.append(icon_bold_text)
 
         # 투어 참가 가능 연령 크롤링
         sidebar_notice_title = soup.select_one('.sidebar-inner-box > .notice-title').get_text(strip=True)

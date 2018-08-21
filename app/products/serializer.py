@@ -1,7 +1,9 @@
 from rest_framework import serializers
 
 from products.models import PopularCity
-from products.models.productinfo import ProductInfo, Product
+from products.models.productinfo import ProductInfo, Product, ProductDetailBase, ProductTicketDetail, \
+    ProductGuideTourDetail, ProductActivityDetail, ProductDetail
+from region.models import City, Country
 
 
 class PopularCitySerializer(serializers.ModelSerializer):
@@ -13,7 +15,29 @@ class PopularCitySerializer(serializers.ModelSerializer):
             'popular_city_name',
         )
 
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = (
+            'pk',
+            'name',
+        )
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = (
+            'pk',
+            'name',
+        )
+
+
 class ProductSerializer(serializers.ModelSerializer):
+    city = CitySerializer()
+    country = CountrySerializer()
+
     class Meta:
         model = ProductInfo
         fields = (
@@ -22,7 +46,11 @@ class ProductSerializer(serializers.ModelSerializer):
             'country',
         )
 
-class ProductDetailSerializer(serializers.ModelSerializer):
+
+class ProductListSerializer(serializers.ModelSerializer):
+    city = CitySerializer()
+    country = CountrySerializer()
+
     class Meta:
         model = Product
         fields = (
@@ -37,6 +65,67 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'category',
             'meta_info',
         )
+
+
+class ProductDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductDetail
+        fields = (
+            'pk',
+            # 'product',
+            'title',
+            'review_number',
+            'product_type_icon',
+            'product_type_text',
+            # 'date',
+            'photo_review',
+            'text_review',
+            # 'guide_name',
+            # 'guide_description',
+            'necessary_guide',
+        )
+
+
+class ProductTicketDetailSerializer(ProductDetailSerializer):
+    region = CitySerializer()
+
+    class Meta:
+        model = ProductTicketDetail
+        fields = (
+            'region',
+            'select_option',
+            'info_photo',
+            'information',
+        )
+
+
+class ProductGuideTourDetailSerializer(serializers.ModelSerializer):
+    region = CitySerializer()
+
+    class Meta:
+        model = ProductGuideTourDetail
+        fields = (
+            'pk',
+            'region',
+            'tour_terms',
+            'course_image',
+            'course_text',
+        )
+
+
+class ProductActivityDetailSerializer(serializers.ModelSerializer):
+    # detail = ProductDetailSerializer()
+    region = CitySerializer()
+
+    class Meta:
+        model = ProductActivityDetail
+        fields = (
+            'pk',
+            'region',
+            'course_image',
+            'course_text',
+        )
+
 
 class ProductSearchSerializer(serializers.ModelSerializer):
     class Meta:

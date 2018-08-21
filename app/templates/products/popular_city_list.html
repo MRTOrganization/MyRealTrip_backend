@@ -11,13 +11,15 @@
                 </div>
             </div>
         </form>
-
         {% for popular_city in popular_cities %}
-            <div class="float-left"><a href="{% url 'product-list' %}">
+            <div class="float-left">
                 <div class="card">
+
+                    <a href="{% url 'product-list' %}">
                     <img class="card-img-top" src="{{ popular_city.popular_image }}">
-                    <h5 class="card-title" style="text-align: center">{{ popular_city.popular_city_name }}</h5>
-                </div></a>
+                    <h5 class="card-title" style="text-align: center">{{ popular_city.popular_city_name }}</h5></a>
+
+                </div>
             </div>
         {% endfor %}
     </div>

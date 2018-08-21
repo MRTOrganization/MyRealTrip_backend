@@ -4,6 +4,7 @@ from django.db import models
 from products import crawler
 from region.models import City, Country
 
+
 class ProductInfo(models.Model):
     city = models.ForeignKey(
         City,
@@ -59,6 +60,10 @@ class Product(models.Model):
 
 
 class ProductDetailBase(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+    )
     title = models.CharField(max_length=255)
     review_number = models.CharField(max_length=255, blank=True)
     product_type_icon = models.ImageField(upload_to='icon', blank=True)
@@ -72,6 +77,10 @@ class ProductDetailBase(models.Model):
 
     class Meta:
         abstract = True
+
+
+class ProductDetail(ProductDetailBase):
+    pass
 
 
 class ProductTicketDetail(ProductDetailBase):
