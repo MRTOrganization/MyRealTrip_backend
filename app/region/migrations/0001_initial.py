@@ -16,14 +16,14 @@ class Migration(migrations.Migration):
             name='City',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                ('name', models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
             name='Country',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                ('name', models.CharField(max_length=100)),
             ],
         ),
         migrations.AddField(
