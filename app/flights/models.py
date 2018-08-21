@@ -6,10 +6,10 @@ from flights import crawler
 
 
 class FlightInfo(models.Model):
-    origin = models.CharField(max_length=200, blank=True)
-    destination = models.CharField(max_length=200, blank=True)
-    depart_date = models.CharField(max_length=100, blank=True)
-    return_date = models.CharField(max_length=100, blank=True)
+    origin = models.CharField(max_length=255, blank=True)
+    destination = models.CharField(max_length=255, blank=True)
+    depart_date = models.CharField(max_length=255, blank=True)
+    return_date = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return f'{self.destination}행 {self.depart_date} ~ {self.return_date} 일 티켓'
@@ -80,7 +80,7 @@ class FlightInfo(models.Model):
 
         origin_k = parse.quote(origin_k)
         destination_k = parse.quote(destination_k)
-        url = f'http://flights.myrealtrip.com/air/b2c/AIR/INT/AIRINTSCH0100100010.k1?initform=RT&domintgubun=I&depctycd={origin}&depctycd={destination}&depctycd=&depctycd=&depctynm={origin_k}&depctynm={destination_k}&depctynm=&depctynm=&arrctycd={destination}&arrctycd={origin}&arrctycd=&arrctycd=&arrctynm={destination_k}&arrctynm={origin_k}&arrctynm=&arrctynm=&depdt={depart_date}&depdt={return_date}&depdt=&depdt=&opencase=N&opencase=N&opencase=N&openday=&openday=&openday=&depdomintgbn=I&tasktype=B2C&servicecacheyn=Y&adtcount=1&chdcount=0&infcount=0&cabinclass=Y&cabinsepflag=Y&preferaircd=&secrchType=FARE&maxprice=&availcount=250&KSESID=air%3Ab2c%3ASELK138RB%3ASELK138RB%3A%3A00'
+        url = f'http://flights.myrealtrip.com/air/b2c/AIR/MBL/AIRMBLSCH0100100010.k1?initform=RT&domintgubun=I&depctycd={origin}&depctycd={destination}&depctycd=&depctycd=&depctynm={origin_k}&depctynm={destination_k}&depctynm=&depctynm=&arrctycd={destination}&arrctycd={origin}&arrctycd=&arrctycd=&arrctynm={destination_k}&arrctynm={origin_k}&arrctynm=&arrctynm=&depdt={depart_date}&depdt={return_date}&depdt=&depdt=&opencase=N&opencase=N&opencase=N&openday=&openday=&openday=&depdomintgbn=I&tasktype=B2C&servicecacheyn=Y&adtcount=1&chdcount=0&infcount=0&cabinclass=Y&cabinsepflag=Y&preferaircd=&secrchType=FARE&maxprice=&availcount=250&KSESID=air%3Ab2c%3ASELK138RB%3ASELK138RB%3A%3A00'
         self.flightinfodetail_set.create(url=url)
 
 #     def get_flight_list(self):

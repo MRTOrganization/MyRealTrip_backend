@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>{{ name }}</p>
+    {% for picture in pictures %}
+        <img src="{{ picture }}" alt="">
+    {% endfor %}
+    <p>{{ how_to_use_title }}</p>
+    <p>{{ how_to_use_content }}</p>
+    <p>{{ cancellation_title }}</p>
+    <p>{{ cancellation_content }}</p>
+
+{% endblock %}

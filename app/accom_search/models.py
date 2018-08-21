@@ -2,12 +2,12 @@ from django.db import models
 
 
 class AccomSearchInfo(models.Model):
-    attraction = models.CharField(max_length=200, blank=True)
-    checkin = models.CharField(max_length=100, blank=True)
-    checkout = models.CharField(max_length=100, blank=True)
-    group_adults = models.CharField(max_length=100, blank=True)
-    group_children = models.CharField(max_length=100, blank=True)
-    no_rooms = models.CharField(max_length=100, blank=True)
+    attraction = models.CharField(max_length=255, blank=True)
+    checkin = models.CharField(max_length=255, blank=True)
+    checkout = models.CharField(max_length=255, blank=True)
+    group_adults = models.CharField(max_length=255, blank=True)
+    group_children = models.CharField(max_length=255, blank=True)
+    no_rooms = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return f'{self.attraction} 에서 {self.checkin} ~ {self.checkout} 까지'

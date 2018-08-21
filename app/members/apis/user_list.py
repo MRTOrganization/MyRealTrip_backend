@@ -25,7 +25,6 @@ class UserList(APIView):
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-
             user = serializer.save()
             user.set_password(raw_password=request.data['password'])
             user.is_active = False
@@ -50,11 +49,14 @@ class UserList(APIView):
 class AuthToken(APIView):
     def post(self, request):
         # 전달받은 데이터에서 username, password추출
+
+        # email = request.data.get('email')
         username = request.data.get('username')
         password = request.data.get('password')
 
         # authenticate가 성공한 경우
         user = authenticate(username=username, password=password)
+
         if user:
             # Token을 가져오거나 없으면 생성
             token, __ = Token.objects.get_or_create(user=user)
