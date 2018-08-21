@@ -32,43 +32,43 @@ class ProductList(APIView):
 class ProductListGuide(APIView):
     def get(self, request, format=None):
         products = Product.objects.filter(category__contains='가이드 투어')[:6]
-        serializer = ProductDetailSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductListTicket(APIView):
     def get(self, request, format=None):
         products = Product.objects.filter(category__contains='티켓/교통패스')[:6]
-        serializer = ProductDetailSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductListActivity(APIView):
     def get(self, request, format=None):
         products = Product.objects.filter(category__contains='액티비티')[:6]
-        serializer = ProductDetailSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductListSnapShot(APIView):
     def get(self, request, format=None):
         products = Product.objects.filter(category__contains='스냅촬영')[:6]
-        serializer = ProductDetailSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductListRestaunrant(APIView):
     def get(self, request, format=None):
         products = Product.objects.filter(category__contains='레스토랑')[:6]
-        serializer = ProductDetailSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductListFun(APIView):
     def get(self, request, format=None):
         products = Product.objects.filter(category__contains='즐길거리')[:6]
-        serializer = ProductDetailSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductListConvenience(APIView):
     def get(self, request, format=None):
         products = Product.objects.filter(category__contains='여행편의')[:6]
-        serializer = ProductDetailSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
 
 class ProductDetail(APIView):
