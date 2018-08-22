@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from members.models import User
 from hotels.models import KoreanHotel
-from products.models.productinfo import ProductTicketDetail, ProductGuideTourDetail, ProductActivityDetail, Product
+from products.models.productinfo import Product
 
 
 class WishList(models.Model):
