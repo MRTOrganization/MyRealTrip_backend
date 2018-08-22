@@ -14,14 +14,6 @@
                     <p>티켓종류 : {{ product.category }}</p>
                     <p>기타정보 : {{ product.meta_info }}</p>
                     <p>{{ product.no }}</p>
-                    <form action="{% url 'product-wishlist' product.pk %}" method="POST">
-                        {% csrf_token %}
-                        {% if product.pk in wishlist %}
-                            <button class="btn btn-primary">위시리스트에서 빼기</button>
-                        {% else %}
-                            <button class="btn btn-primary">위시리스트에 넣기</button>
-                        {% endif %}
-                    </form>
 
             </div>
         </div></a>
