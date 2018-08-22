@@ -19,6 +19,10 @@ class HotelDetail(APIView):
 
 class HotelInfo(APIView):
     def get(self, request, country, city, pk, format=None):
-        hotels = KoreanHotelDetail.objects.get(korean_hotel_id=pk)
+        try:
+            KoreanHotelDetail.objects.get(pk=pk)
+        except KoreanHotelDetail.DoesNotExist:
+            KoreanHotel.objects.get(pk=pk).create_koreanhotel_detail()
+        hotels = KoreanHotelDetail.objects.filter(korean_hotel_id=pk)
         serializer = KHotelInfoSerializer(hotels, many=True)
         return Response(serializer.data)

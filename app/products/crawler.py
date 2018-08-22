@@ -30,7 +30,7 @@ class GetPopularCity:
 
 
 class Product:
-    def __init__(self, city, country, thumbnail, tour_name, title, review, price, category, meta_info):
+    def __init__(self, city, country, thumbnail, tour_name, title, review, price, category, meta_info, no):
         self.city = city
         self.country = country
         self.thumbnail = thumbnail
@@ -40,6 +40,7 @@ class Product:
         self.price = price
         self.category = category
         self.meta_info = meta_info
+        self.no = no
 
 
 class ProductList:
@@ -73,7 +74,7 @@ class ProductList:
             category = item.select_one('div.info-container > div.category').get_text(strip=True)
 
             meta_info = item.select_one('div.meta-infos').get_text(strip=True)
-
+            no = item.get('data-offer-id')
             new_product_list = Product(
                 city=self.city,
                 country=self.country,
@@ -83,10 +84,12 @@ class ProductList:
                 review=review,
                 price=price,
                 category=category,
-                meta_info=meta_info
+                meta_info=meta_info,
+                no=no,
             )
 
             self.product_list.append(new_product_list)
+
         return self.product_list
 
 
@@ -117,54 +120,36 @@ class GetProductDetail:
         self.product_detail = list()
 
     def get_product_detail(self):
-        params = {
-            'no': self.no,
-        }
-        response = requests.get('https://www.myrealtrip.com/offers/', params)
+
+        url = f'https://www.myrealtrip.com/offers/{self.no}'
+        response = requests.get(url)
         soup = BeautifulSoup(response.text, 'lxml')
-        print(params)
 
-        title = soup.select('.offer-title')[0].get_text(strip=True)
-        region = soup.select('span.text-gray')[0].get_text(strip=True)
-        review = soup.select('span.text-gray')[1].get_text(strip=True)
+        dict_result = dict()
 
-        product_type = soup.select('.info-icon-container > .icon-item > .text-sm')[0].get_text(strip=True)
-        meet_time = soup.select('.info-icon-container > .icon-item > .text-sm')[1].get_text(strip=True)
-        time = soup.select('.info-icon-container > .icon-item > .text-sm')[2].get_text(strip=True)
-        language = soup.select('.info-icon-container > .icon-item > .text-sm')[3].get_text(strip=True)
+        dict_result['title'] = soup.select('.offer-title')[0].get_text(strip=True)
+        dict_result['region'] = soup.select('span.text-gray')[0].get_text(strip=True)
+        dict_result['review'] = soup.select('span.text-gray')[1].get_text(strip=True)
+        dict_result['product_type'] = soup.select('.info-icon-container > .icon-item > .text-sm')[0].get_text(strip=True)
+        dict_result['meet_time'] = soup.select('.info-icon-container > .icon-item > .text-sm')[1].get_text(strip=True)
+        dict_result['time'] = soup.select('.info-icon-container > .icon-item > .text-sm')[2].get_text(strip=True)
+        dict_result['language'] = soup.select('.info-icon-container > .icon-item > .text-sm')[3].get_text(strip=True)
 
-        product_type_a = soup.select('.info-icon-container > .icon-item > .text')[0].get_text(strip=True)
-        meet_time_a = soup.select('.info-icon-container > .icon-item > .text')[1].get_text(strip=True)
-        time_a = soup.select('.info-icon-container > .icon-item > .text')[2].get_text(strip=True)
-        language_a = soup.select('.info-icon-container > .icon-item > .text')[3].get_text(strip=True)
+        dict_result['product_type_a'] = soup.select_one('.info-icon-container > .icon-item > .text').get_text(strip=True)
+        dict_result['meet_time_a'] = soup.select('.info-icon-container > .icon-item > .text')[1].get_text(strip=True)
+        dict_result['time_a'] = soup.select('.info-icon-container > .icon-item > .text')[2].get_text(strip=True)
+        dict_result['language_a'] = soup.select('.info-icon-container > .icon-item > .text')[3].get_text(strip=True)
 
-        guide_name = soup.select_one(
+        dict_result['guide_name'] = soup.select_one(
             '.guide-container > .profile-detail > .guide-name > a.gtm-offer-guide-profile > span').get_text(strip=True)
-        guide_desc = soup.select_one('.guide-container > .guide-description > p.more').get_text(strip=True)
+        dict_result['guide_desc'] = soup.select_one('.guide-container > .guide-description > p.more').get_text(strip=True)
 
-        introduce = soup.select_one('.introduce-container > .title').get_text(strip=True)
-        introduce_desc = soup.select_one('.introduce-container > p.more').get_text(strip=True)
+        dict_result['introduce'] = soup.select_one('.introduce-container > .title').get_text(strip=True)
+        dict_result['introduce_desc'] = soup.select_one('.introduce-container > p.more').get_text(strip=True)
 
-        new_product_detail_list = ProductDetail(
-            product=self.no,
-            title=title,
-            region=region,
-            review=review,
-            product_type=product_type,
-            meet_time=meet_time,
-            time=time,
-            language=language,
-            product_type_a=product_type_a,
-            meet_time_a=meet_time_a,
-            time_a=time_a,
-            language_a=language_a,
-            guide_name=guide_name,
-            guide_desc=guide_desc,
-            introduce=introduce,
-            introduce_desc=introduce_desc
-        )
+        return dict_result
 
-        self.product_detail.append(new_product_detail_list)
+        # self.product_detail.append(new_product_detail_list)
 
 
 
