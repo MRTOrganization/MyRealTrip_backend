@@ -16,7 +16,7 @@ class KoreanHotelList:
         item_list = soup.select('li.item')
         for item in item_list:
             thumbnail = item.select_one('div.img-placeholder > img.img').get('data-echo')
-            city_name = item.select_one('div.city-name').get_text(strip=True)
+            # city_name = item.select_one('div.city-name').get_text(strip=True)
             name = item.select_one('div.name').get_text(strip=True)
             comments = item.select_one('div.review > div.text').get_text(strip=True)
             get_href = item.select_one('div.card-cover').select_one('a.offer-link').get('href')
@@ -31,7 +31,6 @@ class KoreanHotelList:
                 country=self.country,
                 thumbnail=thumbnail,
                 name=name,
-                city_name=city_name,
                 comments=comments,
                 price=price,
                 detail_url=detail_url,
@@ -40,12 +39,11 @@ class KoreanHotelList:
 
 
 class KoreanHotelDetailCrwaling:
-    def __init__(self, city, country, thumbnail, name, city_name, comments, price,  detail_url):
+    def __init__(self, city, country, thumbnail, name, comments, price,  detail_url):
         self.city = city
         self.country = country
         self.thumbnail = thumbnail
         self.name = name
-        self.city_name = city_name
         self.comments = comments
         self.price = price
         self.detail_url = detail_url

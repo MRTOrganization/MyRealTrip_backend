@@ -48,7 +48,6 @@ class KoreanHotel(models.Model):
         on_delete=models.CASCADE
     )
     thumbnail = models.CharField(max_length=255, blank=True)
-    city_name = models.CharField(max_length=255, blank=True)
     comments = models.CharField(max_length=255, blank=True)
     price = models.CharField(max_length=255, blank=True)
     detail_url = models.CharField(max_length=255, blank=True)
