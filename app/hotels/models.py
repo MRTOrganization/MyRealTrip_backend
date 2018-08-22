@@ -76,5 +76,5 @@ class KoreanHotel(models.Model):
 class KoreanHotelDetail(models.Model):
     korean_hotel = models.ForeignKey(KoreanHotel, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=True)
-    pictures = models.CharField(max_length=500, blank=True)
-    infos = models.CharField(max_length=500, blank=True)
+    pictures = models.CharField(max_length=50000, blank=True)
+    infos = models.CharField(max_length=5000, blank=True)
