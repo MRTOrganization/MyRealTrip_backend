@@ -42,7 +42,7 @@ def product_city_content(request, country, city):
     products = Product.objects.filter(country=Country.objects.get(name=country)).filter(
         city=City.objects.get(name=city))
 
-    # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
+
     context = {
         'products':products,
         # 'wishlist':wishlist,
@@ -54,35 +54,26 @@ def product_detail(request, country, city, pk):
     product = ProductDetail.objects.filter(
         product__country__name__contains=country,
         product__city__name__contains=city,
-        product__city_id__exact=pk
+        product=Product.objects.get(pk=pk)
     )
-    print('product',product)
 
     if len(product) == 0:
         instance = Product.objects.get(pk=pk)
         instance.create_product_detail()
 
+    product = ProductDetail.objects.filter(
+        product__country__name__contains=country,
+        product__city__name__contains=city,
+        product=Product.objects.get(pk=pk)
+    )[0]
 
-    product = ProductDetail.objects.first()
-    print(product)
-    # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
+
     context = {
         'product': product,
-        # 'wishlist': wishlist,
+
     }
     return render(request, 'products/product_detail.html', context)
 
-
-def product_wishlist(request, pk):
-    if request.method == 'POST':
-        product = Product.objects.get(pk=pk)
-        wish_list = WishList.objects.filter(user=request.user, product=product)
-        if wish_list:
-            wish_list.delete()
-        else:
-            wish_list = WishList.objects.create(user=request.user)
-            wish_list.product.add(product)
-        return redirect('index')
 
 
 def product_search(request):
