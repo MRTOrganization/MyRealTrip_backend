@@ -47,7 +47,7 @@ class KoreanHotel(models.Model):
         Country,
         on_delete=models.CASCADE
     )
-    thumbnail = models.ImageField(upload_to='koreanhotel', blank=True)
+    thumbnail = models.CharField(max_length=255, blank=True)
     comments = models.CharField(max_length=255, blank=True)
     price = models.CharField(max_length=255, blank=True)
     detail_url = models.CharField(max_length=255, blank=True)
