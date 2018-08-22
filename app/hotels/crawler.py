@@ -26,7 +26,7 @@ class KoreanHotelList:
             else:
                 price = '미정'
 
-            new_koreanhotel = KoreanHotelDetail(
+            new_koreanhotel = KoreanHotelDetailCrwaling(
                 city=self.city,
                 country=self.country,
                 thumbnail=thumbnail,
@@ -39,7 +39,7 @@ class KoreanHotelList:
             self.koreanhotel_list.append(new_koreanhotel)
 
 
-class KoreanHotelDetail:
+class KoreanHotelDetailCrwaling:
     def __init__(self, city, country, thumbnail, name, city_name, comments, price,  detail_url):
         self.city = city
         self.country = country
