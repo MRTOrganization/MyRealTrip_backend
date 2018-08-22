@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from hotels.models import KoreanHotelInfo, KoreanHotel
+from hotels.models import KoreanHotelInfo, KoreanHotel, KoreanHotelDetail
 
 
 class KHotelSerializer(serializers.ModelSerializer):
@@ -23,4 +23,15 @@ class KHotelDetailSerializer(serializers.ModelSerializer):
             'thumbnail',
             'comments',
             'price',
+        )
+
+class KHotelInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = KoreanHotelDetail
+        fields = (
+            'pk',
+            'korean_hotel',
+            'name',
+            'pictures',
+            'infos',
         )

@@ -48,10 +48,30 @@ class KoreanHotel(models.Model):
         on_delete=models.CASCADE
     )
     thumbnail = models.CharField(max_length=255, blank=True)
+    city_name = models.CharField(max_length=255, blank=True)
     comments = models.CharField(max_length=255, blank=True)
     price = models.CharField(max_length=255, blank=True)
     detail_url = models.CharField(max_length=255, blank=True)
 
+    def create_koreanhotel_detail(self):
+        koreanhotel = crawler.KoreanHotelDetailCrwaling(
+            city=self.city,
+            country=self.country,
+            thumbnail=self.thumbnail,
+            name=self.name,
+            city_name=self.city_name,
+            comments=self.comments,
+            price=self.price,
+            detail_url=self.detail_url
+        )
+        koreanhotel_detail_info = koreanhotel.search_koreanhotel_detail()
+        new_koreanhotel_detail = KoreanHotelDetail.objects.create(
+            korean_hotel=self,
+            name=koreanhotel_detail_info.name,
+            pictures=koreanhotel_detail_info.picture_list,
+            infos=koreanhotel_detail_info.info_dict,
+        )
+        return new_koreanhotel_detail
 
 
 
