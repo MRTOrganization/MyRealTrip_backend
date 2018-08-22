@@ -73,6 +73,7 @@ class Product(models.Model):
             title=products_detail['title'],
             region=products_detail['region'],
             review=products_detail['review'],
+            price=products_detail['price'],
             product_type=products_detail['product_type'],
             meet_time=products_detail['meet_time'],
             time=products_detail['time'],
@@ -96,6 +97,7 @@ class ProductDetail(models.Model):
     title = models.CharField(max_length=255)
     region = models.CharField(max_length=20)
     review = models.CharField(max_length=50)
+    price = models.CharField(max_length=20)
     product_type = models.CharField(max_length=10, blank=True)
     meet_time = models.CharField(max_length=10, blank=True)
     time = models.CharField(max_length=10, blank=True)

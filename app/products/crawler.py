@@ -94,12 +94,13 @@ class ProductList:
 
 
 class ProductDetail:
-    def __init__(self, product, title, region, review, product_type, meet_time, time, language,
+    def __init__(self, product, title, region, review, price, product_type, meet_time, time, language,
                  product_type_a, meet_time_a, time_a, language_a, guide_name, guide_desc, introduce, introduce_desc):
         self.product = product
         self.title = title
         self.region = region
         self.review = review
+        self.price = price
         self.product_type = product_type
         self.meet_time = meet_time
         self.time = time
@@ -130,6 +131,7 @@ class GetProductDetail:
         dict_result['title'] = soup.select('.offer-title')[0].get_text(strip=True)
         dict_result['region'] = soup.select('span.text-gray')[0].get_text(strip=True)
         dict_result['review'] = soup.select('span.text-gray')[1].get_text(strip=True)
+        dict_result['price'] = soup.select('.sidebar-inner-box > .reservation-container')[0].get_text(strip=True)
         dict_result['product_type'] = soup.select('.info-icon-container > .icon-item > .text-sm')[0].get_text(strip=True)
         dict_result['meet_time'] = soup.select('.info-icon-container > .icon-item > .text-sm')[1].get_text(strip=True)
         dict_result['time'] = soup.select('.info-icon-container > .icon-item > .text-sm')[2].get_text(strip=True)

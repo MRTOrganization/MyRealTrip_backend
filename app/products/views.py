@@ -67,13 +67,11 @@ def product_detail(request, country, city, pk):
         product=Product.objects.get(pk=pk)
     )[0]
 
-
     context = {
         'product': product,
 
     }
     return render(request, 'products/product_detail.html', context)
-
 
 
 def product_search(request):

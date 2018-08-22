@@ -63,25 +63,20 @@ class ProductListSerializer(serializers.ModelSerializer):
             'price',
             'category',
             'meta_info',
+            'no',
         )
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-    city = CitySerializer()
-    country = CountrySerializer()
-    product = ProductSerializer()
 
     class Meta:
         model = ProductDetail
         fields = (
             'pk',
-            'no',
-            'city',
-            'country',
-            'product',
             'region',
             'title',
             'review',
+            'price',
             'product_type',
             'meet_time',
             'time',
@@ -95,8 +90,6 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'introduce',
             'introduce_desc',
         )
-
-
 
 
 class ProductSearchSerializer(serializers.ModelSerializer):
