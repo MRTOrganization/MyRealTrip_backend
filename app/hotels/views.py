@@ -33,6 +33,7 @@ def koreanhotel_detail(request, country, city, pk):
         KoreanHotel.objects.get(pk=pk).create_koreanhotel_detail()
 
     k_detail = KoreanHotelDetail.objects.get(pk=pk)
+    print(k_detail)
     name = k_detail.name
     pictures = k_detail.pictures
     infos = k_detail.infos
