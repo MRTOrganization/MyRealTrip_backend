@@ -50,20 +50,19 @@ def product_city_content(request, country, city):
 
 
 def product_detail(request, country, city, pk):
-    product = ProductDetail.objects.filter(country=Country.objects.get(name=country),
-                                           city=City.objects.get(name=city), pk=pk)
+    product = ProductDetail.objects.filter(country=Country.objects.get(name=country)).filter(city=City.objects.get(name=city)).filter(pk=pk)
+    print(product)
     if len(product) == 0:
-        product_detail_info = ProductDetailInfo.objects.create(country=Country.objects.get(name=country), city=City.objects.get(name=city), pk=pk)
+        product_detail_info = ProductDetailInfo.objects.create(country=Country.objects.get(name=country)).filter(city=City.objects.get(name=city))
         product_detail_info.create_product_detail()
 
-        product = ProductDetail.objects.filter(country=Country.objects.get(name=country), city=City.objects.get(name=city), pk=pk)
+        product = ProductDetail.objects.filter(country=Country.objects.get(name=country)).filter(city=City.objects.get(name=city)).filter(pk=pk)
         # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
         context = {
             'product': product,
             # 'wishlist': wishlist,
         }
         return render(request, 'products/product_detail.html', context)
-
 
 
 def product_wishlist(request, pk):

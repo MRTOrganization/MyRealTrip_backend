@@ -63,22 +63,28 @@ class ProductDetailInfo(models.Model):
         Product,
         on_delete=models.CASCADE,
     )
+    city = models.ForeignKey(
+        City,
+        on_delete=models.CASCADE,
+    )
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.CASCADE,
+    )
     no = models.IntegerField()
 
     def get_product_detail_crawler(self):
 
-        product_detail_list = crawler.GetProductDetail(no=self.no)
+        product_detail_list = crawler.GetProductDetail(product__country__name=country, no=self.no)
         product_detail_list.get_product_detail()
 
         result = product_detail_list.product_detail
-        print('result:',result)
         return result
 
     def create_product_detail(self):
         products_detail = self.get_product_detail_crawler()
 
         for product in products_detail:
-            print(product)
             ProductDetail.objects.create(
                 no=product.no,
                 title=product.title,
@@ -102,6 +108,14 @@ class ProductDetailInfo(models.Model):
 class ProductDetail(models.Model):
     product = models.ForeignKey(
         Product,
+        on_delete=models.CASCADE,
+    )
+    city = models.ForeignKey(
+        City,
+        on_delete=models.CASCADE,
+    )
+    country = models.ForeignKey(
+        Country,
         on_delete=models.CASCADE,
     )
     no = models.IntegerField()

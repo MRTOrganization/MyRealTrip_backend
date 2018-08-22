@@ -91,9 +91,9 @@ class ProductList:
 
 
 class ProductDetail:
-    def __init__(self, no, title, region, review, product_type, meet_time, time, language,
+    def __init__(self, product, title, region, review, product_type, meet_time, time, language,
                  product_type_a, meet_time_a, time_a, language_a, guide_name, guide_desc, introduce, introduce_desc):
-        self.no = no
+        self.product = product
         self.title = title
         self.region = region
         self.review = review
@@ -122,6 +122,7 @@ class GetProductDetail:
         }
         response = requests.get('https://www.myrealtrip.com/offers/', params)
         soup = BeautifulSoup(response.text, 'lxml')
+        print(params)
 
         title = soup.select('.offer-title')[0].get_text(strip=True)
         region = soup.select('span.text-gray')[0].get_text(strip=True)
@@ -132,11 +133,10 @@ class GetProductDetail:
         time = soup.select('.info-icon-container > .icon-item > .text-sm')[2].get_text(strip=True)
         language = soup.select('.info-icon-container > .icon-item > .text-sm')[3].get_text(strip=True)
 
-        product_type_a = soup.select_one('.info-icon-container > .icon-item > .text').get_text(strip=True)
+        product_type_a = soup.select('.info-icon-container > .icon-item > .text')[0].get_text(strip=True)
         meet_time_a = soup.select('.info-icon-container > .icon-item > .text')[1].get_text(strip=True)
         time_a = soup.select('.info-icon-container > .icon-item > .text')[2].get_text(strip=True)
         language_a = soup.select('.info-icon-container > .icon-item > .text')[3].get_text(strip=True)
-
 
         guide_name = soup.select_one(
             '.guide-container > .profile-detail > .guide-name > a.gtm-offer-guide-profile > span').get_text(strip=True)
@@ -146,7 +146,7 @@ class GetProductDetail:
         introduce_desc = soup.select_one('.introduce-container > p.more').get_text(strip=True)
 
         new_product_detail_list = ProductDetail(
-            no=self.no,
+            product=self.no,
             title=title,
             region=region,
             review=review,
