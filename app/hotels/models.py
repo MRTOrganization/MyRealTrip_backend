@@ -58,7 +58,6 @@ class KoreanHotel(models.Model):
             country=self.country,
             thumbnail=self.thumbnail,
             name=self.name,
-            city_name=self.city_name,
             comments=self.comments,
             price=self.price,
             detail_url=self.detail_url
