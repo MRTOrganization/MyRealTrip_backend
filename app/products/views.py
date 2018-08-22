@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 
 
 from products.models import PopularCity
-from products.models.productinfo import Product, ProductInfo
+from products.models.productinfo import Product, ProductInfo, ProductDetail, ProductDetailInfo
 from region.models import Country, City
 from wishlist.models import WishList
 
@@ -48,8 +48,22 @@ def product_city_content(request, country, city):
     }
     return render(request, 'products/products_city_content.html', context)
 
-def product_detail(request, pk):
-    pass
+
+def product_detail(request, country, city, pk):
+    product = ProductDetail.objects.filter(country=Country.objects.get(name=country),
+                                           city=City.objects.get(name=city), pk=pk)
+    if len(product) == 0:
+        product_detail_info = ProductDetailInfo.objects.create(country=Country.objects.get(name=country), city=City.objects.get(name=city), pk=pk)
+        product_detail_info.create_product_detail()
+
+        product = ProductDetail.objects.filter(country=Country.objects.get(name=country), city=City.objects.get(name=city), pk=pk)
+        # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
+        context = {
+            'product': product,
+            # 'wishlist': wishlist,
+        }
+        return render(request, 'products/product_detail.html', context)
+
 
 
 def product_wishlist(request, pk):

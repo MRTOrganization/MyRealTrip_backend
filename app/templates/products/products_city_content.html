@@ -1,27 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
     {% for product in products %}
-        <div class="card" style="width: 50%; min-width: 600px; margin: auto">
-            <div class="card-title">
-                <p style="text-align: center"><strong>{{ product.title }}</strong></p>
-                <p style="text-align: right"><strong>{{ product.tour_name }}</strong></p>
-            </div>
-            <img class="card-img-top" src="{{ product.thumbnail }}" style="width: 100%">
-            <div class="card-body">
-                <p>{{ product.review }}</p>
-                <p>가격 : {{ product.price }}</p>
-                <p>티켓종류 : {{ product.category }}</p>
-                <p>기타정보 : {{ product.meta_info }}</p>
-                <form action="{% url 'product-wishlist' product.pk %}" method="POST">
-                    {% csrf_token %}
-                    {% if product.pk in wishlist %}
-                        <button class="btn btn-primary">위시리스트에서 빼기</button>
-                    {% else %}
-                        <button class="btn btn-primary">위시리스트에 넣기</button>
-                    {% endif %}
-                </form>
+        <a href="{% url 'product-detail' product.country product.city product.pk %}">
+            <div class="card" style="width: 50%; min-width: 600px; margin: auto">
+                <div class="card-title">
+                    <p style="text-align: center"><strong>{{ product.title }}</strong></p>
+                    <p style="text-align: right"><strong>{{ product.tour_name }}</strong></p>
+                </div>
+                <img class="card-img-top" src="{{ product.thumbnail }}" style="width: 100%">
+                <div class="card-body">
+                    <p>{{ product.review }}</p>
+                    <p>가격 : {{ product.price }}</p>
+                    <p>티켓종류 : {{ product.category }}</p>
+                    <p>기타정보 : {{ product.meta_info }}</p>
+                    <form action="{% url 'product-wishlist' product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if product.pk in wishlist %}
+                            <button class="btn btn-primary">위시리스트에서 빼기</button>
+                        {% else %}
+                            <button class="btn btn-primary">위시리스트에 넣기</button>
+                        {% endif %}
+                    </form>
 
             </div>
-        </div>
+        </div></a>
     {% endfor %}
 {% endblock %}
