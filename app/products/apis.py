@@ -81,6 +81,7 @@ class ProductDetailList(APIView):
 
 class ProductDetailView(APIView):
     def get(self, request, country, city, pk, format=None):
+        print(pk)
         products = ProductDetail.objects.filter(product__country__name__contains=country).filter(product__city__name__contains=city).filter(product_id__exact=pk)
         serializer = ProductDetailSerializer(products, many=True)
         return Response(serializer.data)
