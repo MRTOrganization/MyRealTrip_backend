@@ -14,6 +14,7 @@ urlpatterns = [
     path('product_list/fun/', apis.ProductListFun.as_view()),
     path('product_list/convenience/', apis.ProductListConvenience.as_view()),
     path('product_search/<str:keyword>/', apis.ProductSearch.as_view()),
-    path('product_list/<str:country>/<str:city>/', apis.ProductDetail.as_view()),
-    # path('product_list/<str:country>/<str:city>/ticket/', apis.ProductTicket),
+    path('product_list/<str:country>/<str:city>/', apis.ProductDetailList.as_view()),
+    path('product_list/<str:country>/<str:city>/<int:pk>/', apis.ProductDetailView.as_view()),
+
 ]

@@ -23,7 +23,6 @@ class ProductInfo(models.Model):
         result = product_list.product_list
         return result
 
-
     def create_product(self):
         products_list = self.get_product_list_crawler()
 
@@ -59,77 +58,112 @@ class Product(models.Model):
     meta_info = models.CharField(max_length=255, blank=True)
 
 
-class ProductDetailBase(models.Model):
+class ProductDetailInfo(models.Model):
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
     )
+    no = models.IntegerField()
+
+    def get_product_detail_crawler(self):
+
+        product_detail_list = crawler.GetProductDetail(no=self.no)
+        product_detail_list.get_product_detail()
+
+        result = product_detail_list.product_detail
+        print('result:',result)
+        return result
+
+    def create_product_detail(self):
+        products_detail = self.get_product_detail_crawler()
+
+        for product in products_detail:
+            print(product)
+            ProductDetail.objects.create(
+                no=product.no,
+                title=product.title,
+                region=product.region,
+                review=product.review,
+                product_type=product.product_type,
+                meet_time=product.meet_time,
+                time=product.time,
+                language=product.language,
+                product_type_a=product.product_type_a,
+                meet_time_a=product.meet_time_a,
+                time_a=product.time_a,
+                language_a=product.language_a,
+                guide_name=product.guide_name,
+                guide_desc=product.guide_desc,
+                introduce=product.introduce,
+                introduce_desc=product.introduce_desc
+            )
+
+
+class ProductDetail(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+    )
+    no = models.IntegerField()
     title = models.CharField(max_length=255)
-    review_number = models.CharField(max_length=255, blank=True)
-    product_type_icon = models.ImageField(upload_to='icon', blank=True)
-    product_type_text = models.CharField(max_length=255, blank=True)
-    date = models.IntegerField()
-    photo_review = models.ImageField(upload_to='review', blank=True)
-    text_review = models.TextField(blank=True)
+    region = models.CharField(max_length=20)
+    review = models.CharField(max_length=50)
+    product_type = models.CharField(max_length=10, blank=True)
+    meet_time = models.CharField(max_length=10, blank=True)
+    time = models.CharField(max_length=10, blank=True)
+    language = models.CharField(max_length=10, blank=True)
+    product_type_a = models.CharField(max_length=10, blank=True)
+    meet_time_a = models.CharField(max_length=10, blank=True)
+    time_a = models.CharField(max_length=10, blank=True)
+    language_a = models.CharField(max_length=10, blank=True)
     guide_name = models.CharField(max_length=255)
-    guide_description = models.TextField()
-    necessary_guide = models.TextField(blank=True)
-
-    class Meta:
-        abstract = True
+    guide_desc = models.TextField()
+    introduce = models.CharField(max_length=100)
+    introduce_desc = models.TextField()
 
 
-class ProductDetail(ProductDetailBase):
-    pass
 
-
-class ProductTicketDetail(ProductDetailBase):
-    region = models.ManyToManyField(
-        City,
-        related_name='city_ticket',
-    )
-    select_option = models.CharField(max_length=255)
-    info_photo = models.ImageField(upload_to='information', blank=True)
-    information = models.TextField()
-
-
-class ProductGuideTourDetail(ProductDetailBase):
-    region = models.ManyToManyField(
-        City,
-        related_name='city_guide',
-    )
-    tour_terms = models.TextField()
-    course_image = models.ImageField(upload_to='course_image', blank=True)
-    course_text = models.TextField(blank=True)
-
-
-class ProductActivityDetail(ProductDetailBase):
-    region = models.ManyToManyField(
-        City,
-        related_name='city_activity',
-    )
-    course_image = models.ImageField(upload_to='course_image', blank=True)
-    course_text = models.TextField(blank=True)
+#     class Meta:
+#         abstract = True
+#
+#
+# class ProductDetail(ProductDetailBase):
+#     pass
+#
+#
+# class ProductTicketDetail(ProductDetailBase):
+#     region = models.ManyToManyField(
+#         City,
+#         related_name='city_ticket',
+#     )
+#     select_option = models.CharField(max_length=255)
+#     info_photo = models.ImageField(upload_to='information', blank=True)
+#     information = models.TextField()
+#
+#
+# class ProductGuideTourDetail(ProductDetailBase):
+#     region = models.ManyToManyField(
+#         City,
+#         related_name='city_guide',
+#     )
+#     tour_terms = models.TextField()
+#     course_image = models.ImageField(upload_to='course_image', blank=True)
+#     course_text = models.TextField(blank=True)
+#
+#
+# class ProductActivityDetail(ProductDetailBase):
+#     region = models.ManyToManyField(
+#         City,
+#         related_name='city_activity',
+#     )
+#     course_image = models.ImageField(upload_to='course_image', blank=True)
+#     course_text = models.TextField(blank=True)
 
 
 class Comment(models.Model):
-    ticket = models.ForeignKey(
-        ProductTicketDetail,
+    product = models.ForeignKey(
+        Product,
         on_delete=models.CASCADE,
-        null=True,
-        related_name='comments_by_tickets',
-    )
-    guide = models.ForeignKey(
-        ProductGuideTourDetail,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='comments_by_guide_tour',
-    )
-    activity = models.ForeignKey(
-        ProductActivityDetail,
-        on_delete=models.CASCADE,
-        null=True,
-        related_name='comments_by_activity',
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
