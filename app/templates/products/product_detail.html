@@ -1,21 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% for productd in product %}
         <div class="card" style="width: 50%; min-width: 600px; margin: auto">
             <div class="card-title">
-                <p style="text-align: center"><strong>{{ productd.title }}</strong></p>
-                <p style="text-align: right">{{ productd.region }}</p>
-                <p style="text-align: right">{{ productd.review }}</p>
+                <p style="text-align: center"><strong>{{ product.title }}</strong></p>
+                <p style="text-align: right">{{ product.region }}</p>
+                <p style="text-align: right">{{ product.review }}</p>
             </div>
             <div class="card-body">
-                <p>{{ productd.product_type }} : {{ productd.product_type_a }}</p>
-                <p>{{ productd.meet_time }} : {{ productd.meet_time_a }}</p>
-                <p>{{ productd.time }} : {{ productd.time_a }}</p>
-                <p>{{ productd.language }} : {{ productd.language_a }}</p>
-                <p>{{ productd.guide_name }}</p>
-                <p>{{ productd.guide_desc }}</p>
-                <p>{{ productd.introduce }}</p>
-                <p>{{ productd.introduce_desc }}</p>
+                <p>{{ product.product_type }} : {{ product.product_type_a }}</p>
+                <p>{{ product.meet_time }} : {{ product.meet_time_a }}</p>
+                <p>{{ product.time }} : {{ product.time_a }}</p>
+                <p>{{ product.language }} : {{ product.language_a }}</p>
+                <p>{{ product.guide_name }}</p>
+                <p>{{ product.guide_desc }}</p>
+                <p>{{ product.introduce }}</p>
+                <p>{{ product.introduce_desc }}</p>
                 <form action="{% url 'product-wishlist' product.pk %}" method="POST">
                     {% csrf_token %}
                     {% if product.pk in wishlist %}
@@ -27,5 +26,5 @@
 
             </div>
         </div>
-    {% endfor %}
+
 {% endblock %}

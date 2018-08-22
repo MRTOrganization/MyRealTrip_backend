@@ -1,9 +1,9 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, HttpResponseRedirect
 
-
+from products.crawler import GetProductDetail
 from products.models import PopularCity
-from products.models.productinfo import Product, ProductInfo, ProductDetail, ProductDetailInfo
+from products.models.productinfo import Product, ProductInfo, ProductDetail
 from region.models import Country, City
 from wishlist.models import WishList
 
@@ -41,6 +41,7 @@ def product_city_content(request, country, city):
 
     products = Product.objects.filter(country=Country.objects.get(name=country)).filter(
         city=City.objects.get(name=city))
+
     # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
     context = {
         'products':products,
@@ -50,19 +51,26 @@ def product_city_content(request, country, city):
 
 
 def product_detail(request, country, city, pk):
-    product = ProductDetail.objects.filter(country=Country.objects.get(name=country),
-                                           city=City.objects.get(name=city), pk=pk)
-    if len(product) == 0:
-        product_detail_info = ProductDetailInfo.objects.create(country=Country.objects.get(name=country), city=City.objects.get(name=city), pk=pk)
-        product_detail_info.create_product_detail()
+    product = ProductDetail.objects.filter(
+        product__country__name__contains=country,
+        product__city__name__contains=city,
+        product__city_id__exact=pk
+    )
+    print('product',product)
 
-        product = ProductDetail.objects.filter(country=Country.objects.get(name=country), city=City.objects.get(name=city), pk=pk)
-        # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
-        context = {
-            'product': product,
-            # 'wishlist': wishlist,
-        }
-        return render(request, 'products/product_detail.html', context)
+    if len(product) == 0:
+        instance = Product.objects.get(pk=pk)
+        instance.create_product_detail()
+
+
+    product = ProductDetail.objects.first()
+    print(product)
+    # wishlist = WishList.objects.filter(user=request.user).values_list('product', flat=True)
+    context = {
+        'product': product,
+        # 'wishlist': wishlist,
+    }
+    return render(request, 'products/product_detail.html', context)
 
 
 

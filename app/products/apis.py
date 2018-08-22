@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from products.models import PopularCity
-from products.models.productinfo import ProductInfo, Product, ProductDetailInfo, ProductDetail
+from products.models.productinfo import ProductInfo, Product, ProductDetail
 from products.serializer import ProductSerializer, PopularCitySerializer, \
     ProductListSerializer, ProductDetailSerializer
 

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from products.models import PopularCity
-from products.models.productinfo import ProductInfo, Product, ProductDetail, ProductDetailInfo
+from products.models.productinfo import ProductInfo, Product, ProductDetail
 from region.models import City, Country
 
 

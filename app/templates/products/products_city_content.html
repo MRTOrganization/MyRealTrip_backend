@@ -13,6 +13,7 @@
                     <p>가격 : {{ product.price }}</p>
                     <p>티켓종류 : {{ product.category }}</p>
                     <p>기타정보 : {{ product.meta_info }}</p>
+                    <p>{{ product.no }}</p>
                     <form action="{% url 'product-wishlist' product.pk %}" method="POST">
                         {% csrf_token %}
                         {% if product.pk in wishlist %}

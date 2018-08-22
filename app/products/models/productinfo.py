@@ -37,6 +37,7 @@ class ProductInfo(models.Model):
                 price=product.price,
                 category=product.category,
                 meta_info=product.meta_info,
+                no=product.no,
             )
 
 
@@ -56,47 +57,34 @@ class Product(models.Model):
     price = models.CharField(max_length=255)
     category = models.CharField(max_length=255)
     meta_info = models.CharField(max_length=255, blank=True)
-
-
-class ProductDetailInfo(models.Model):
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-    )
-    no = models.IntegerField()
+    no = models.IntegerField(blank=True)
 
     def get_product_detail_crawler(self):
 
         product_detail_list = crawler.GetProductDetail(no=self.no)
-        product_detail_list.get_product_detail()
-
-        result = product_detail_list.product_detail
-        print('result:',result)
+        result = product_detail_list.get_product_detail()
         return result
 
     def create_product_detail(self):
         products_detail = self.get_product_detail_crawler()
-
-        for product in products_detail:
-            print(product)
-            ProductDetail.objects.create(
-                no=product.no,
-                title=product.title,
-                region=product.region,
-                review=product.review,
-                product_type=product.product_type,
-                meet_time=product.meet_time,
-                time=product.time,
-                language=product.language,
-                product_type_a=product.product_type_a,
-                meet_time_a=product.meet_time_a,
-                time_a=product.time_a,
-                language_a=product.language_a,
-                guide_name=product.guide_name,
-                guide_desc=product.guide_desc,
-                introduce=product.introduce,
-                introduce_desc=product.introduce_desc
-            )
+        ProductDetail.objects.create(
+            product=self,
+            title=products_detail['title'],
+            region=products_detail['region'],
+            review=products_detail['review'],
+            product_type=products_detail['product_type'],
+            meet_time=products_detail['meet_time'],
+            time=products_detail['time'],
+            language=products_detail['language'],
+            product_type_a=products_detail['product_type_a'],
+            meet_time_a=products_detail['meet_time_a'],
+            time_a=products_detail['time_a'],
+            language_a=products_detail['language_a'],
+            guide_name=products_detail['guide_name'],
+            guide_desc=products_detail['guide_desc'],
+            introduce=products_detail['introduce'],
+            introduce_desc=products_detail['introduce_desc'],
+        )
 
 
 class ProductDetail(models.Model):
@@ -104,7 +92,6 @@ class ProductDetail(models.Model):
         Product,
         on_delete=models.CASCADE,
     )
-    no = models.IntegerField()
     title = models.CharField(max_length=255)
     region = models.CharField(max_length=20)
     review = models.CharField(max_length=50)
