@@ -13,10 +13,7 @@ def popular_city_list(request):
     if len(PopularCity.objects.all()) == 0:
         cities = PopularCity.objects.create()
         cities.create_popular_city()
-        popular_cities = PopularCity.objects.all()
-    else:
-        popular_cities = PopularCity.objects.all()
-
+    popular_cities = PopularCity.objects.all()[1:]
     context = {
         'popular_cities': popular_cities,
     }
