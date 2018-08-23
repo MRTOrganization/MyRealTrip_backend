@@ -11,7 +11,7 @@ from products.serializer import ProductSerializer, PopularCitySerializer, \
 
 class PopularCityList(APIView):
     def get(self, request, format=None):
-        popular_cities = PopularCity.objects.all()
+        popular_cities = PopularCity.objects.all()[1:]
         serializer = PopularCitySerializer(popular_cities, many=True)
         return Response(serializer.data)
 
